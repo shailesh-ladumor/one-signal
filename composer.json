@@ -1,0 +1,44 @@
+{
+  "name": "ladumor/one-signal",
+  "description": "Laravel Wrapper for OneSignal.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "laravel",
+    "php",
+    "one-signal",
+    "push",
+    "notification"
+  ],
+  "authors": [
+    {
+      "name": "Shailesh Ladumor",
+      "email": "shaileshmladumor@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/support": "~5.0|^6.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~5.0",
+    "mockery/mockery": "~0.9",
+    "ext-curl": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ladumor\\OneSignal\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "\\Ladumor\\OneSignal\\OneSignalServiceProvider"
+      ],
+      "aliases": {
+        "OneSignal": "Ladumor\\OneSignal\\Facades\\OneSignal"
+      }
+    }
+  }
+}
