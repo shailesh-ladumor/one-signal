@@ -11,7 +11,7 @@ Laravel Wrapper for [oneSignal](https://onesignal.com).
 
 Install the package by the following command,
 
-    composer require Ladumor/one-signal
+    composer require ladumor/one-signal
 
 ## Publish the config file
 
@@ -35,3 +35,14 @@ For send push notification, use the sendPush method by calling,
     $message = 'hey!! this is test push.!'   
     
     \OneSignal::sendPush($fields, $message);
+    
+### Contents
+
+You can customise a contents and pass it in fields. message does not required when you pass contents
+    
+    $fields['include_player_ids'] = ['xxxxxxxx-xxxx-xxx-xxxx-yyyyyyyyy'];
+    $fields['contents'] = array(
+                              "en" => 'English Message',
+                              "es" => 'Spanish Message',
+                          );
+    \OneSignal::sendPush($fields);
