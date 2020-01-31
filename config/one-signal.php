@@ -37,5 +37,5 @@ return [
     |-------------------------------------------------------------------------------------------
     |
     */
-    'mutable_content' => env('ONE_SIGNAL_MUTABLE_CONTENT', true),
+    'mutable_content' => env('ONE_SIGNAL_MUTABLE_CONTENT', true)
 ];

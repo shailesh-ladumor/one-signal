@@ -17,7 +17,13 @@ Install the package by the following command,
 
 Run the following command to publish config file,
 
-    php artisan vendor:publish --provider="ladumor\OneSignal\OneSignalServiceProvider"
+    php artisan vendor:publish --provider="Ladumor\OneSignal\OneSignalServiceProvider"
+
+## Add Provider
+
+Add the provider to your `config/app.php` into `provider` section if using lower version of laravel,
+
+    Ladumor\OneSignal\OneSignalServiceProvider::class,
 
 ## Add Facade
 
