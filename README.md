@@ -9,14 +9,14 @@ Laravel Wrapper for [One Signal](https://onesignal.com). One Signal is a great p
 ## Contents
 
 - [Installation](#installation)
-     - [Publish the config file](#Publish the config file)
-     - [Add Provider](#Add Provider)
-     - [Add Facade](#Add Facade)
-- [Usage](#Usage)
-    - [Send Push Notification](#Send Push Notification)
-    - [Customise Contents](#Customise Contents)
-    - [Get All Notifications](#Get All Notifications)
-    - [Get Single Notification](#Get Single Notification)
+    - [Publish the config file](#publish-the-config-file)
+    - [Add Provider](#add-provider)
+    - [Add Facade](#add-facade)
+- [Usage](#usage)
+    - [Send Push Notification](#send-push-notification)
+    - [Customise Contents](#customise-contents)
+    - [Get All Notifications](#get-all-notifications)
+    - [Get Single Notification](#get-single-notification)
 - [License](#License)
 
 ## Installation
