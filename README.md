@@ -5,7 +5,7 @@ Laravel Wrapper for [One Signal](https://onesignal.com). One Signal is a great p
 [![Total Downloads](https://poser.pugx.org/ladumor/one-signal/downloads)](https://packagist.org/packages/ladumor/one-signal)
 [![Daily Downloads](https://poser.pugx.org/ladumor/one-signal/d/daily)](https://packagist.org/packages/ladumor/one-signal)
 [![Monthly Downloads](https://poser.pugx.org/ladumor/one-signal/d/monthly)](https://packagist.org/packages/ladumor/one-signal)
-[![License](https://poser.pugx.org/ladumor/one-signal/license)](https://packagist.org/packages/ladumor/one-signal)
+[![License](https://poser.pugx.org/ladumor/one-signal/license)](LICENSE.md)
 ## Contents
 
 - [Installation](#installation)
@@ -17,7 +17,8 @@ Laravel Wrapper for [One Signal](https://onesignal.com). One Signal is a great p
     - [Customise Contents](#customise-contents)
     - [Get All Notifications](#get-all-notifications)
     - [Get Single Notification](#get-single-notification)
-- [License](#License)
+- [Change Log](#change-log)
+- [License](#license)
 
 ## Installation
 
@@ -77,6 +78,8 @@ For retrieve single notification, use the `getNotification` method with id param
     
     OneSignal::getNotification($notificationId);    
 You can check [here](https://documentation.onesignal.com/reference#section-result-format-view-notification) return response format.
- 
+
+### Change Log
+ Please see [Change Log](CHANGELOG.md) here
 ### License
  The MIT License (MIT). Please see [License](LICENSE.md) File for more information   
