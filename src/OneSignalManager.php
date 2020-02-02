@@ -2,7 +2,10 @@
 
 namespace Ladumor\OneSignal;
 
-class OneSignalManager
+/**
+ * Class OneSignalManager
+ */
+class OneSignalManager extends OneSignalClient
 {
     // One Signal EndPoint Url
     protected $url;
@@ -100,18 +103,6 @@ class OneSignalManager
     }
 
     /**
-     * return headers
-     * @return array
-     */
-    protected function getHeaders()
-    {
-        return array(
-            'Content-Type: application/json; charset=utf-8',
-            'Authorization: Basic '.$this->getAppAuthorize()
-        );
-    }
-
-    /**
      * @param $fields
      * @param string $message
      * @return array|mixed
@@ -119,7 +110,7 @@ class OneSignalManager
     public function sendPush($fields, $message = '')
     {
         $content = array(
-            "en" => $message
+            "en" => $message,
         );
 
         $fields['app_id'] = $this->getAppId();
@@ -131,23 +122,32 @@ class OneSignalManager
 
         $fields = json_encode($fields);
 
-        try {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $this->getUrl());
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $this->getHeaders());
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HEADER, false);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            $response = curl_exec($ch);
-            curl_close($ch);
-            return json_decode($response, true);
-        } catch (\Exception $exception) {
-            return [
-                'code'    => $exception->getCode(),
-                'message' => $exception->getMessage(),
-            ];
-        }
+        return $this->post($this->getUrl(), $fields);
+    }
+
+    /**
+     * GET all notifications of any applications.
+     * @param int $limit
+     * @param int $offset
+     *
+     * @return array|mixed
+     */
+    public function getNotifications($limit = 50, $offset = 0)
+    {
+        $url = $this->getUrl().'?app_id='.$this->getAppId().'&limit='.$limit.'&offset='.$offset;
+
+        return $this->get($url);
+    }
+
+    /**
+     * Get Single notification
+     * @param string $notificationId
+     * @return object
+     */
+    public function getNotification($notificationId)
+    {
+        $url = $this->getUrl().'/'.$notificationId."?app_id=".$this->getAppId();
+
+        return $this->get($url);
     }
 }
