@@ -201,7 +201,9 @@ class OneSignalManager extends OneSignalClient
      */
     public function addDevice($fields)
     {
-        $fields['app_id'] = $this->getAppId();
+        if ( ! isset($fields['app_id']) || empty($fields['app_id'])) {
+            $fields['app_id'] = $this->getAppId();
+        }
 
         if ( ! isset($fields['language']) || empty($fields['language'])) {
             $fields['language'] = "en";
@@ -222,7 +224,9 @@ class OneSignalManager extends OneSignalClient
      */
     public function updateDevice($fields, $playerId)
     {
-        $fields['app_id'] = $this->getAppId();
+        if ( ! isset($fields['app_id']) || empty($fields['app_id'])) {
+            $fields['app_id'] = $this->getAppId();
+        }
 
         if ( ! isset($fields['language']) || empty($fields['language'])) {
             $fields['language'] = "en";
