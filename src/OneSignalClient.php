@@ -90,4 +90,39 @@ class OneSignalClient
             ];
         }
     }
+
+    /**
+     * Put Method
+     * @param string $url
+     * @param string $fields
+     *
+     * @return array|mixed
+     */
+    public function put($url, $fields)
+    {
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $this->getHeaders());
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HEADER, false);
+            curl_setopt($ch, CURLOPT_PUT, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $response = curl_exec($ch);
+            $err = curl_error($ch);
+            curl_close($ch);
+
+            if (!empty($err)) { // return  error
+                return json_decode($err, true);
+            }
+
+            return json_decode($response, true); // return success
+        } catch (\Exception $exception) {
+            return [
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ];
+        }
+    }
 }

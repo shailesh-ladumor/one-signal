@@ -2,6 +2,10 @@
 
 namespace Ladumor\OneSignal;
 
+// end point
+define("NOTIFICATIONS", "notifications");
+define("DEVICES", "players");
+
 /**
  * Class OneSignalManager
  */
@@ -11,11 +15,13 @@ class OneSignalManager extends OneSignalClient
     protected $url;
 
     /**
+     * @param string $url
+     *
      * @return string $url
      */
-    private function getUrl()
+    private function getUrl($url)
     {
-        return $this->url;
+        return $this->url . $url;
     }
 
     /**
@@ -92,7 +98,7 @@ class OneSignalManager extends OneSignalClient
     }
 
     /**
-     * Set required configuration
+     * Set up required configuration
      */
     protected function initConfig()
     {
@@ -103,8 +109,11 @@ class OneSignalManager extends OneSignalClient
     }
 
     /**
+     * Send a Push Notification to user on device
+     *
      * @param $fields
      * @param string $message
+     *
      * @return array|mixed
      */
     public function sendPush($fields, $message = '')
@@ -113,20 +122,21 @@ class OneSignalManager extends OneSignalClient
             "en" => $message,
         );
 
-        $fields['app_id'] = $this->getAppId();
+        $fields['app_id']          = $this->getAppId();
         $fields['mutable_content'] = $this->getMutableContent();
 
-        if (!isset($fields['contents']) || empty($fields['contents'])) {
+        if ( ! isset($fields['contents']) || empty($fields['contents'])) {
             $fields['contents'] = $content;
         }
 
         $fields = json_encode($fields);
 
-        return $this->post($this->getUrl(), $fields);
+        return $this->post($this->getUrl(NOTIFICATIONS), $fields);
     }
 
     /**
      * GET all notifications of any applications.
+     *
      * @param int $limit
      * @param int $offset
      *
@@ -134,20 +144,94 @@ class OneSignalManager extends OneSignalClient
      */
     public function getNotifications($limit = 50, $offset = 0)
     {
-        $url = $this->getUrl().'?app_id='.$this->getAppId().'&limit='.$limit.'&offset='.$offset;
+        $url = $this->getUrl(NOTIFICATIONS) . '?app_id=' . $this->getAppId() . '&limit=' . $limit . '&offset=' . $offset;
 
         return $this->get($url);
     }
 
     /**
      * Get Single notification
+     *
      * @param string $notificationId
+     *
      * @return object
      */
     public function getNotification($notificationId)
     {
-        $url = $this->getUrl().'/'.$notificationId."?app_id=".$this->getAppId();
+        $url = $this->getUrl(NOTIFICATIONS) . '/' . $notificationId . "?app_id=" . $this->getAppId();
 
         return $this->get($url);
+    }
+
+    /**
+     * GET all devices of any applications.
+     *
+     * @param int $limit
+     * @param int $offset
+     *
+     * @return array|mixed
+     */
+    public function getDevices($limit = 50, $offset = 0)
+    {
+        $url = $this->getUrl(DEVICES) . '?app_id=' . $this->getAppId() . '&limit=' . $limit . '&offset=' . $offset;
+
+        return $this->get($url);
+    }
+
+    /**
+     * Get Single Device information
+     *
+     * @param string $playerId
+     *
+     * @return object
+     */
+    public function getDevice($playerId)
+    {
+        $url = $this->getUrl(DEVICES) . '/' . $playerId . "?app_id=" . $this->getAppId();
+
+        return $this->get($url);
+    }
+
+    /**
+     * Add new device on your application
+     *
+     * @param array $fields
+     *
+     * @return array|mixed
+     */
+    public function addDevice($fields)
+    {
+        $fields['app_id'] = $this->getAppId();
+
+        if ( ! isset($fields['language']) || empty($fields['language'])) {
+            $fields['language'] = "en";
+        }
+
+        $fields = json_encode($fields);
+
+        return $this->post($this->getUrl(NOTIFICATIONS), $fields);
+    }
+
+    /**
+     * update existing device on your application
+     *
+     * @param array $fields
+     * @param int $playerId
+     *
+     * @return array|mixed
+     */
+    public function updateDevice($fields, $playerId)
+    {
+        $fields['app_id'] = $this->getAppId();
+
+        if ( ! isset($fields['language']) || empty($fields['language'])) {
+            $fields['language'] = "en";
+        }
+
+        $fields = json_encode($fields);
+
+        $url = $this->getUrl(DEVICES) . '/' . $playerId;
+
+        return $this->put($url, $fields);
     }
 }
