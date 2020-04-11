@@ -1,3 +1,7 @@
+### [v0.3.1](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.3.1) (April 4th, 2020)
+* `Device` URl change [issue reported by @yusronMu77] [(#3)](https://github.com/shailesh-ladumor/one-signal/issues/3) [(0986551)](https://github.com/shailesh-ladumor/one-signal/commit/0986551481e395da25aef4f6895f63a0e0c4e914)
+##### Added
+
 ### [v0.3.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.3.0) (March 15th, 2020)
 
 ##### Added
