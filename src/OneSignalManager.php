@@ -211,7 +211,7 @@ class OneSignalManager extends OneSignalClient
 
         $fields = json_encode($fields);
 
-        return $this->post($this->getUrl(NOTIFICATIONS), $fields);
+        return $this->post($this->getUrl(DEVICES), $fields);
     }
 
     /**
