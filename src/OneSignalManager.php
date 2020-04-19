@@ -5,7 +5,8 @@ namespace Ladumor\OneSignal;
 // end point
 define("NOTIFICATIONS", "notifications");
 define("DEVICES", "players");
-
+define("APPS","apps");
+define("SEGMENTS","segments");
 /**
  * Class OneSignalManager
  */
@@ -237,5 +238,43 @@ class OneSignalManager extends OneSignalClient
         $url = $this->getUrl(DEVICES) . '/' . $playerId;
 
         return $this->put($url, $fields);
+    }
+
+    /**
+     * Create Segment
+     *
+     * @param $fields
+     * @param  null  $appId
+     *
+     * @return array|mixed
+     */
+    public function createSegment($fields, $appId = null)
+    {
+        if (empty($appId)) { // take a default if does not specified
+            $appId = $this->getAppId();
+        }
+
+        $fields = json_encode($fields);
+
+        $url = $this->getUrl(APPS.'/'.$appId.'/'.SEGMENTS);
+
+        return $this->post($url, $fields);
+    }
+
+    /**
+     * @param $segmentId
+     * @param  null  $appId
+     *
+     * @return array|mixed
+     */
+    public function deleteSegment($segmentId, $appId = null)
+    {
+        if (empty($appId)) { // take a default if does not specified
+            $appId = $this->getAppId();
+        }
+
+        $url = $this->getUrl(APPS.'/'.$appId.'/'.SEGMENTS.'/'.$segmentId);
+
+        return $this->delete($url);
     }
 }
