@@ -130,9 +130,7 @@ class OneSignalManager extends OneSignalClient
             $fields['contents'] = $content;
         }
 
-        $fields = json_encode($fields);
-
-        return $this->post($this->getUrl(NOTIFICATIONS), $fields);
+        return $this->post($this->getUrl(NOTIFICATIONS), json_encode($fields));
     }
 
     /**
@@ -210,9 +208,7 @@ class OneSignalManager extends OneSignalClient
             $fields['language'] = "en";
         }
 
-        $fields = json_encode($fields);
-
-        return $this->post($this->getUrl(DEVICES), $fields);
+        return $this->post($this->getUrl(DEVICES), json_encode($fields));
     }
 
     /**
@@ -233,11 +229,7 @@ class OneSignalManager extends OneSignalClient
             $fields['language'] = "en";
         }
 
-        $fields = json_encode($fields);
-
-        $url = $this->getUrl(DEVICES) . '/' . $playerId;
-
-        return $this->put($url, $fields);
+        return $this->put($this->getUrl(DEVICES) . '/' . $playerId, json_encode($fields));
     }
 
     /**
@@ -254,11 +246,7 @@ class OneSignalManager extends OneSignalClient
             $appId = $this->getAppId();
         }
 
-        $fields = json_encode($fields);
-
-        $url = $this->getUrl(APPS.'/'.$appId.'/'.SEGMENTS);
-
-        return $this->post($url, $fields);
+        return $this->post($this->getUrl(APPS.'/'.$appId.'/'.SEGMENTS), json_encode($fields));
     }
 
     /**
@@ -273,8 +261,61 @@ class OneSignalManager extends OneSignalClient
             $appId = $this->getAppId();
         }
 
-        $url = $this->getUrl(APPS.'/'.$appId.'/'.SEGMENTS.'/'.$segmentId);
+        return $this->delete($this->getUrl(APPS.'/'.$appId.'/'.SEGMENTS.'/'.$segmentId));
+    }
 
-        return $this->delete($url);
+    /**
+     * GET all apps of your one signal.
+     *
+     * @return array|mixed
+     */
+    public function getApps()
+    {
+        $url = $this->getUrl(APPS);
+
+        return $this->get($url);
+    }
+
+    /**
+     * GET single app of your one signal.
+     *
+     * @param null|string $appId
+     *
+     * @return array|mixed
+     */
+    public function getApp($appId = null)
+    {
+        $url = $this->getUrl(APPS. '/'.$appId);
+
+        return $this->get($url);
+    }
+
+    /**
+     * Add new application on your one signal.
+     *
+     * @param array $fields
+     *
+     * @return array|mixed
+     */
+    public function createApp($fields)
+    {
+        return $this->post($this->getUrl(APPS), json_encode($fields));
+    }
+
+    /**
+     * Update existing application on your one signal.
+     *
+     * @param array $fields
+     * @param null|string $appId
+     *
+     * @return array|mixed
+     */
+    public function updateApp($fields, $appId = null)
+    {
+        if (empty($appId)) { // take a default if does not specified
+            $appId = $this->getAppId();
+        }
+
+        return $this->put($this->getUrl(APPS.'/'.$appId), json_encode($fields));
     }
 }
