@@ -90,6 +90,25 @@ class OneSignalManager extends OneSignalClient
         return $this->mutableContent;
     }
 
+    // One Signal Auth key
+    protected $authKey;
+
+    /**
+     * @param  string  $authKey
+     */
+    public function setAuthKey($authKey)
+    {
+        $this->authKey = $authKey;
+    }
+
+    /**
+     * @return string $authKey
+     */
+    private function getAuthKey()
+    {
+        return $this->authKey;
+    }
+
     /**
      * OneSignalManager constructor.
      */
@@ -106,6 +125,8 @@ class OneSignalManager extends OneSignalClient
         $this->setUrl(config('one-signal.url'));
         $this->setAppId(config('one-signal.app_id'));
         $this->setAppAuthorize(config('one-signal.authorize'));
+        $this->setAuthorization(config('one-signal.authorize'));
+        $this->setAuthKey(config('one-signal.auth_key'));
         $this->setMutableContent(config('one-signal.mutable_content'));
     }
 
@@ -271,6 +292,8 @@ class OneSignalManager extends OneSignalClient
      */
     public function getApps()
     {
+        $this->setAuthorization($this->getAuthKey());
+
         $url = $this->getUrl(APPS);
 
         return $this->get($url);
@@ -285,6 +308,8 @@ class OneSignalManager extends OneSignalClient
      */
     public function getApp($appId = null)
     {
+        $this->setAuthorization($this->getAuthKey());
+
         $url = $this->getUrl(APPS. '/'.$appId);
 
         return $this->get($url);
@@ -299,6 +324,8 @@ class OneSignalManager extends OneSignalClient
      */
     public function createApp($fields)
     {
+        $this->setAuthorization($this->getAuthKey());
+
         return $this->post($this->getUrl(APPS), json_encode($fields));
     }
 
@@ -312,6 +339,8 @@ class OneSignalManager extends OneSignalClient
      */
     public function updateApp($fields, $appId = null)
     {
+        $this->setAuthorization($this->getAuthKey());
+
         if (empty($appId)) { // take a default if does not specified
             $appId = $this->getAppId();
         }

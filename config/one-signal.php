@@ -37,5 +37,15 @@ return [
     |-------------------------------------------------------------------------------------------
     |
     */
-    'mutable_content' => env('ONE_SIGNAL_MUTABLE_CONTENT', true)
+    'mutable_content' => env('ONE_SIGNAL_MUTABLE_CONTENT', true),
+
+    /*
+    |-------------------------------------------------------------------------------------------
+    | Auth Key - One Signal have Auth key of account.
+    |
+    | You can manage apps
+    |-------------------------------------------------------------------------------------------
+    |
+   */
+    'auth_key' => env('ONE_SIGNAL_AUTH_KEY')
 ];

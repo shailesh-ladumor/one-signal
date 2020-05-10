@@ -7,6 +7,26 @@ namespace Ladumor\OneSignal;
  */
 class OneSignalClient
 {
+    // One Signal EndPoint Url
+    public $authorization;
+
+    /**
+     *
+     * @return string $authorization
+     */
+    private function getAuthorization()
+    {
+        return $this->authorization;
+    }
+
+    /**
+     * @param  string  $key
+     */
+    public function setAuthorization($key)
+    {
+        $this->authorization = $key;
+    }
+
     /**
      * return headers
      * @return array
@@ -15,7 +35,8 @@ class OneSignalClient
     {
         return array(
             'Content-Type: application/json; charset=utf-8',
-            'Authorization: Basic '.config('one-signal.authorize'),
+            'X-Requested-With:XMLHttpRequest',
+            'Authorization: Basic '.$this->getAuthorization(),
         );
     }
 
