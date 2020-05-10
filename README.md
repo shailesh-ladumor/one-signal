@@ -21,6 +21,12 @@ Laravel Wrapper for [One Signal](https://onesignal.com). One Signal is a great p
     - [Get Single Device](#get-single-device)
     - [Create Device](#get-single-device)
     - [Update Device](#update-device)
+    - [Create Segment](#create-segment)
+    - [Delete Segment](#delete-segment)
+    - [View Apps](#view-apps)
+    - [view App](#view-app)
+    - [Create App](#create-app)
+    - [Update App](#update-app)
 - [Change Log](#change-log)
 - [License](#license)
 
@@ -99,7 +105,7 @@ You can check [here](https://documentation.onesignal.com/reference#view-device) 
 
 ### Create Device
 
-For add a device in your application, use the `addDevice` method by calling, if you want to create device in different application than you can specify it in `$fields` array.
+For add a device in your application, use the `addDevice` method by calling, if you want to create device in different application than you can specify `app_id` in `$fields` array.
         
      $fields = [
             'device_type'  => 0,
@@ -117,7 +123,7 @@ You can check [here](https://documentation.onesignal.com/reference#section-examp
 
 ### Update Device
 
-For update a device in your application, use the `addDevice` method by calling, if you want to update device in different application than you can specify it in `$fields` array.
+For update a device in your application, use the `addDevice` method by calling, if you want to update device in different application than you can specify `app_id` in `$fields` array.
         
      $fields = [
             'device_type'  => 0,
@@ -134,6 +140,71 @@ For update a device in your application, use the `addDevice` method by calling, 
         
      return OneSignal::updateDevice($fields, $playerId);   
 You can check [here](https://documentation.onesignal.com/reference#section-body-parameters) supported parameters and guide.
+
+### Create Segment
+ #### NOTE: REQUIRED ONE-SIGNAL [PAID PLAN](https://documentation.onesignal.com/docs/paid-plan-benefits)
+For add a new segment in your application, use the `createSegment` method by calling,
+       
+     $fields = [
+             'name' => 'iOS, Android, Web',
+             "filters" => array("field" => "device_type", "relation" => "=", "value" => "Android"),
+         ];
+    
+    return OneSignal::createSegment($fields); 
+
+You can check [here](https://documentation.onesignal.com/reference#create-segments) supported parameters and guide.
+
+    OneSignal::deleteSegment('YOUR_SEGMENT_ID')
+    
+### Delete Segment
+ #### NOTE: REQUIRED ONE-SIGNAL [PAID PLAN](https://documentation.onesignal.com/docs/paid-plan-benefits)
+
+You can check [here](https://documentation.onesignal.com/reference#delete-segments) for more guide.
+## Apps
+Note*: `Auth key must be set in one-signal.php` how to get [auth_key](https://documentation.onesignal.com/docs/accounts-and-keys#section-user-auth-key)?
+
+### View Apps
+View the details of all of your current OneSignal apps
+
+     $apps = OneSignal::getApps();
+     
+You can check [here](https://documentation.onesignal.com/reference#view-apps-apps) api response.
+
+### View App
+View the details of single of your current OneSignal app or other app by passing app id.
+
+     // It's return default site which is configured in config.
+     $app = OneSignal::getApp();
+     
+     // you can specify app id as wel but it's optional
+     $app = OneSignal::getApp('YOUR_APP_ID');
+     
+     
+You can check [here](https://documentation.onesignal.com/reference#view-an-app) api response.
+
+### Create App
+Creates a new OneSignal app.
+
+     $fields = array(
+            'name' => "TestByMe"
+        );
+    
+     OneSignal::createApp($fields);
+
+You can check [here](https://documentation.onesignal.com/reference#create-an-app) supported parameters and guide.
+
+### Create App
+Creates a new OneSignal app.
+
+     $fields = array(
+            'name' => "TestByMe"
+        );
+    
+     OneSignal::updateApp($fields);
+     // you can pass second param as a appId if you want to update other app.. default take from config.
+
+You can check [here](https://documentation.onesignal.com/reference#update-an-app) supported parameters and guide.
+
 
 ### Change Log
  Please see [Change Log](CHANGELOG.md) here

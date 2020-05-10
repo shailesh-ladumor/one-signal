@@ -7,6 +7,26 @@ namespace Ladumor\OneSignal;
  */
 class OneSignalClient
 {
+    // One Signal EndPoint Url
+    public $authorization;
+
+    /**
+     *
+     * @return string $authorization
+     */
+    private function getAuthorization()
+    {
+        return $this->authorization;
+    }
+
+    /**
+     * @param  string  $key
+     */
+    public function setAuthorization($key)
+    {
+        $this->authorization = $key;
+    }
+
     /**
      * return headers
      * @return array
@@ -15,7 +35,8 @@ class OneSignalClient
     {
         return array(
             'Content-Type: application/json; charset=utf-8',
-            'Authorization: Basic '.config('one-signal.authorize'),
+            'X-Requested-With:XMLHttpRequest',
+            'Authorization: Basic '.$this->getAuthorization(),
         );
     }
 
@@ -108,6 +129,39 @@ class OneSignalClient
             curl_setopt($ch, CURLOPT_HEADER, false);
             curl_setopt($ch, CURLOPT_PUT, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $response = curl_exec($ch);
+            $err = curl_error($ch);
+            curl_close($ch);
+
+            if (!empty($err)) { // return  error
+                return json_decode($err, true);
+            }
+
+            return json_decode($response, true); // return success
+        } catch (\Exception $exception) {
+            return [
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Delete Method
+     * @param string $url
+     *
+     * @return array|mixed
+     */
+    public function delete($url)
+    {
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $this->getHeaders());
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HEADER, false);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             $response = curl_exec($ch);
             $err = curl_error($ch);

@@ -1,3 +1,11 @@
+### [v0.3.2](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.3.2) (May 10, 2020)
+
+##### Added
+* Segments support add [(#2)](https://github.com/shailesh-ladumor/one-signal/pull/5) [(988e474)](https://github.com/shailesh-ladumor/one-signal/commit/988e4741249a37d076c08ff902dadf84c399a77e)
+* Apps Support add [(#2)](https://github.com/shailesh-ladumor/one-signal/pull/5) [(7660ac3)](https://github.com/shailesh-ladumor/one-signal/commit/7660ac39baa55d2eb60610ed50192a80d3e086ee)
+##### Changed
+* Readme updated with `apps` and `segments` example [(#5)](https://github.com/shailesh-ladumor/one-signal/pull/5)
+
 ### [v0.3.1](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.3.1) (April 4th, 2020)
 ##### Changed
 * `Device` URl change [issue reported by @yusronMu77] [(#3)](https://github.com/shailesh-ladumor/one-signal/issues/3) [(0986551)](https://github.com/shailesh-ladumor/one-signal/commit/0986551481e395da25aef4f6895f63a0e0c4e914)

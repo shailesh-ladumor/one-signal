@@ -5,7 +5,8 @@ namespace Ladumor\OneSignal;
 // end point
 define("NOTIFICATIONS", "notifications");
 define("DEVICES", "players");
-
+define("APPS","apps");
+define("SEGMENTS","segments");
 /**
  * Class OneSignalManager
  */
@@ -89,6 +90,25 @@ class OneSignalManager extends OneSignalClient
         return $this->mutableContent;
     }
 
+    // One Signal Auth key
+    protected $authKey;
+
+    /**
+     * @param  string  $authKey
+     */
+    public function setAuthKey($authKey)
+    {
+        $this->authKey = $authKey;
+    }
+
+    /**
+     * @return string $authKey
+     */
+    private function getAuthKey()
+    {
+        return $this->authKey;
+    }
+
     /**
      * OneSignalManager constructor.
      */
@@ -105,6 +125,8 @@ class OneSignalManager extends OneSignalClient
         $this->setUrl(config('one-signal.url'));
         $this->setAppId(config('one-signal.app_id'));
         $this->setAppAuthorize(config('one-signal.authorize'));
+        $this->setAuthorization(config('one-signal.authorize'));
+        $this->setAuthKey(config('one-signal.auth_key'));
         $this->setMutableContent(config('one-signal.mutable_content'));
     }
 
@@ -129,9 +151,7 @@ class OneSignalManager extends OneSignalClient
             $fields['contents'] = $content;
         }
 
-        $fields = json_encode($fields);
-
-        return $this->post($this->getUrl(NOTIFICATIONS), $fields);
+        return $this->post($this->getUrl(NOTIFICATIONS), json_encode($fields));
     }
 
     /**
@@ -209,9 +229,7 @@ class OneSignalManager extends OneSignalClient
             $fields['language'] = "en";
         }
 
-        $fields = json_encode($fields);
-
-        return $this->post($this->getUrl(DEVICES), $fields);
+        return $this->post($this->getUrl(DEVICES), json_encode($fields));
     }
 
     /**
@@ -232,10 +250,101 @@ class OneSignalManager extends OneSignalClient
             $fields['language'] = "en";
         }
 
-        $fields = json_encode($fields);
+        return $this->put($this->getUrl(DEVICES) . '/' . $playerId, json_encode($fields));
+    }
 
-        $url = $this->getUrl(DEVICES) . '/' . $playerId;
+    /**
+     * Create Segment
+     *
+     * @param $fields
+     * @param  null  $appId
+     *
+     * @return array|mixed
+     */
+    public function createSegment($fields, $appId = null)
+    {
+        if (empty($appId)) { // take a default if does not specified
+            $appId = $this->getAppId();
+        }
 
-        return $this->put($url, $fields);
+        return $this->post($this->getUrl(APPS.'/'.$appId.'/'.SEGMENTS), json_encode($fields));
+    }
+
+    /**
+     * @param $segmentId
+     * @param  null  $appId
+     *
+     * @return array|mixed
+     */
+    public function deleteSegment($segmentId, $appId = null)
+    {
+        if (empty($appId)) { // take a default if does not specified
+            $appId = $this->getAppId();
+        }
+
+        return $this->delete($this->getUrl(APPS.'/'.$appId.'/'.SEGMENTS.'/'.$segmentId));
+    }
+
+    /**
+     * GET all apps of your one signal.
+     *
+     * @return array|mixed
+     */
+    public function getApps()
+    {
+        $this->setAuthorization($this->getAuthKey());
+
+        $url = $this->getUrl(APPS);
+
+        return $this->get($url);
+    }
+
+    /**
+     * GET single app of your one signal.
+     *
+     * @param null|string $appId
+     *
+     * @return array|mixed
+     */
+    public function getApp($appId = null)
+    {
+        $this->setAuthorization($this->getAuthKey());
+
+        $url = $this->getUrl(APPS. '/'.$appId);
+
+        return $this->get($url);
+    }
+
+    /**
+     * Add new application on your one signal.
+     *
+     * @param array $fields
+     *
+     * @return array|mixed
+     */
+    public function createApp($fields)
+    {
+        $this->setAuthorization($this->getAuthKey());
+
+        return $this->post($this->getUrl(APPS), json_encode($fields));
+    }
+
+    /**
+     * Update existing application on your one signal.
+     *
+     * @param array $fields
+     * @param null|string $appId
+     *
+     * @return array|mixed
+     */
+    public function updateApp($fields, $appId = null)
+    {
+        $this->setAuthorization($this->getAuthKey());
+
+        if (empty($appId)) { // take a default if does not specified
+            $appId = $this->getAppId();
+        }
+
+        return $this->put($this->getUrl(APPS.'/'.$appId), json_encode($fields));
     }
 }
