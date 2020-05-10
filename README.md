@@ -193,8 +193,8 @@ Creates a new OneSignal app.
 
 You can check [here](https://documentation.onesignal.com/reference#create-an-app) supported parameters and guide.
 
-### Create App
-Creates a new OneSignal app.
+### Update App
+Update a new OneSignal app.
 
      $fields = array(
             'name' => "TestByMe"
