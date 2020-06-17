@@ -7,7 +7,8 @@ Laravel Wrapper for [One Signal](https://onesignal.com). One Signal is a great p
 [![Monthly Downloads](https://poser.pugx.org/ladumor/one-signal/d/monthly)](https://packagist.org/packages/ladumor/one-signal)
 [![License](https://poser.pugx.org/ladumor/one-signal/license)](LICENSE.md)
 
-here is video [tutorial](https://youtu.be/c1W7unOw3s4)
+### :film_strip: here is video [tutorial](https://youtu.be/c1W7unOw3s4)
+
 ## Contents
 
 - [Installation](#installation)
