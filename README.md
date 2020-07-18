@@ -7,13 +7,12 @@ Laravel Wrapper for [One Signal](https://onesignal.com). One Signal is a great p
 [![Monthly Downloads](https://poser.pugx.org/ladumor/one-signal/d/monthly)](https://packagist.org/packages/ladumor/one-signal)
 [![License](https://poser.pugx.org/ladumor/one-signal/license)](LICENSE.md)
 
+
 ## :film_strip: here is video tutorials
 #### How to install and how to implement notifications and devices APIs.
 
  [<img src="https://img.youtube.com/vi/c1W7unOw3s4/0.jpg" width="250">](https://youtu.be/c1W7unOw3s4)
- 
-#### how to implement Segment and Apps APIs.
- * Tutorial comming soon
+
 ## Contents
 
 - [Installation](#installation)
@@ -201,8 +200,8 @@ Creates a new OneSignal app.
 
 You can check [here](https://documentation.onesignal.com/reference#create-an-app) supported parameters and guide.
 
-### Create App
-Creates a new OneSignal app.
+### Update App
+Update a new OneSignal app.
 
      $fields = array(
             'name' => "TestByMe"
