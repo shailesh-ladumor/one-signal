@@ -1,3 +1,9 @@
+### [v0.3.3](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.3.3) (July 18, 2020)
+
+##### Changed
+* Fix the update App API and moved config vars into client [(#6)](https://github.com/shailesh-ladumor/one-signal/pull/6) [(98647a3)](https://github.com/shailesh-ladumor/one-signal/pull/6/commits/98647a35d7b69d8f63adad803278a85f8244b6ed)
+* Readme updated 
+
 ### [v0.3.2](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.3.2) (May 10, 2020)
 
 ##### Added

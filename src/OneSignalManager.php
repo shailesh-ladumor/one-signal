@@ -12,102 +12,6 @@ define("SEGMENTS","segments");
  */
 class OneSignalManager extends OneSignalClient
 {
-    // One Signal EndPoint Url
-    protected $url;
-
-    /**
-     * @param string $url
-     *
-     * @return string $url
-     */
-    private function getUrl($url)
-    {
-        return $this->url . $url;
-    }
-
-    /**
-     * @param string $url
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
-
-    // One Signal App ID
-    protected $appId;
-
-    /**
-     * @return string $appId
-     */
-    private function getAppId()
-    {
-        return $this->appId;
-    }
-
-    /**
-     * @param string $appId
-     */
-    public function setAppId($appId)
-    {
-        $this->appId = $appId;
-    }
-
-    // One Signal Authorize key
-    protected $appAuthorize;
-
-    /**
-     * @param string $appAuthorize
-     */
-    public function setAppAuthorize($appAuthorize)
-    {
-        $this->appAuthorize = $appAuthorize;
-    }
-
-    /**
-     * @return string $appAuthorize
-     */
-    private function getAppAuthorize()
-    {
-        return $this->appAuthorize;
-    }
-
-    // Default mutable content is enabled
-    protected $mutableContent;
-
-    /**
-     * @param string $mutableContent
-     */
-    public function setMutableContent($mutableContent)
-    {
-        $this->mutableContent = $mutableContent;
-    }
-
-    /**
-     * @return string $mutableContent
-     */
-    private function getMutableContent()
-    {
-        return $this->mutableContent;
-    }
-
-    // One Signal Auth key
-    protected $authKey;
-
-    /**
-     * @param  string  $authKey
-     */
-    public function setAuthKey($authKey)
-    {
-        $this->authKey = $authKey;
-    }
-
-    /**
-     * @return string $authKey
-     */
-    private function getAuthKey()
-    {
-        return $this->authKey;
-    }
 
     /**
      * OneSignalManager constructor.
@@ -124,7 +28,6 @@ class OneSignalManager extends OneSignalClient
     {
         $this->setUrl(config('one-signal.url'));
         $this->setAppId(config('one-signal.app_id'));
-        $this->setAppAuthorize(config('one-signal.authorize'));
         $this->setAuthorization(config('one-signal.authorize'));
         $this->setAuthKey(config('one-signal.auth_key'));
         $this->setMutableContent(config('one-signal.mutable_content'));

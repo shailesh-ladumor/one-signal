@@ -7,7 +7,11 @@ Laravel Wrapper for [One Signal](https://onesignal.com). One Signal is a great p
 [![Monthly Downloads](https://poser.pugx.org/ladumor/one-signal/d/monthly)](https://packagist.org/packages/ladumor/one-signal)
 [![License](https://poser.pugx.org/ladumor/one-signal/license)](LICENSE.md)
 
-### :film_strip: here is video [tutorial](https://youtu.be/c1W7unOw3s4)
+
+## :film_strip: here is video tutorials
+#### How to install and how to implement notifications and devices APIs.
+
+ [<img src="https://img.youtube.com/vi/c1W7unOw3s4/0.jpg" width="250">](https://youtu.be/c1W7unOw3s4)
 
 ## Contents
 
@@ -24,10 +28,10 @@ Laravel Wrapper for [One Signal](https://onesignal.com). One Signal is a great p
     - [Get Single Device](#get-single-device)
     - [Create Device](#get-single-device)
     - [Update Device](#update-device)
-    - [Create Segment](#create-segment)
-    - [Delete Segment](#delete-segment)
+    - [Create Segment (NEED PAID PLAN)](#create-segment)
+    - [Delete Segment(NEED PAID PLAN)](#delete-segment)
     - [View Apps](#view-apps)
-    - [view App](#view-app)
+    - [View App](#view-app)
     - [Create App](#create-app)
     - [Update App](#update-app)
 - [Change Log](#change-log)
