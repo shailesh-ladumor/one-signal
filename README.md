@@ -13,6 +13,9 @@ Laravel Wrapper for [One Signal](https://onesignal.com). One Signal is a great p
 
  [<img src="https://img.youtube.com/vi/c1W7unOw3s4/0.jpg" width="250">](https://youtu.be/c1W7unOw3s4)
 
+#### how to implement Segment and Apps APIs.
+ [<img src="https://img.youtube.com/vi/mxiEZ4H2cgY/0.jpg" width="250">](https://youtu.be/mxiEZ4H2cgY)
+ 
 ## Contents
 
 - [Installation](#installation)
