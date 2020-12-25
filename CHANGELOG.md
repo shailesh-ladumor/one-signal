@@ -1,3 +1,9 @@
+### [v0.3.4](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.3.4) (Dec 25, 2020)
+
+##### Changed
+* Laravel v8.x Support add  [(#8)](https://github.com/shailesh-ladumor/one-signal/pull/8) [(ef044f)](https://github.com/shailesh-ladumor/one-signal/pull/8/commits/42e34111340519ebf9104ea0f5a3c49892ef044f)
+* fixed issue [#7](https://github.com/shailesh-ladumor/one-signal/issues/7)
+
 ### [v0.3.3](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.3.3) (July 18, 2020)
 
 ##### Changed
