@@ -3,6 +3,7 @@
 namespace Ladumor\OneSignal;
 
 use Illuminate\Support\ServiceProvider;
+use Ladumor\OneSignal\commands\PublishUserDevice;
 
 class OneSignalServiceProvider extends ServiceProvider
 {
@@ -31,5 +32,13 @@ class OneSignalServiceProvider extends ServiceProvider
         $this->app->singleton('one-signal', function ($app) {
             return new OneSignalManager();
         });
+
+        $this->app->singleton('one-signal.userDevice:publish', function ($app) {
+            return new PublishUserDevice();
+        });
+
+        $this->commands([
+            'one-signal.userDevice:publish',
+        ]);
     }
 }
