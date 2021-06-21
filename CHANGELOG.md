@@ -1,3 +1,9 @@
+### [v0.4.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.4.0) (Jun 21, 2021)
+
+##### Added
+* Add User Device Mobile API support [(#7a3243d)](https://github.com/shailesh-ladumor/one-signal/commit/7a3243d30ab64e05fed5edea22386a3ea3a6ff74)
+* Readme updated
+
 ### [v0.3.3](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.3.3) (July 18, 2020)
 
 ##### Changed

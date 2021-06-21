@@ -227,7 +227,9 @@ this command generate following files,
 
 Also, do not forget to add following routes in to the `api.php` file.
 
-`use App\Http\Controllers\API\UserDeviceAPIController;`
+```angular2html
+use App\Http\Controllers\API\UserDeviceAPIController;
+```
 
 ```
   Route::post('user-device/register', [UserDeviceAPIController::class, 'registerDevice']);
