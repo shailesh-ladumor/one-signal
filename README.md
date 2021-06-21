@@ -1,6 +1,6 @@
-# Laravel OneSignal
+# Laravel One Signal
 
-Laravel Wrapper for [One Signal](https://onesignal.com). One Signal is a great platform for send a push notification to your users.
+Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). One Signal is a great platform for send a push notification to your users.
 
 [![Total Downloads](https://poser.pugx.org/ladumor/one-signal/downloads)](https://packagist.org/packages/ladumor/one-signal)
 [![Daily Downloads](https://poser.pugx.org/ladumor/one-signal/d/daily)](https://packagist.org/packages/ladumor/one-signal)
@@ -8,11 +8,14 @@ Laravel Wrapper for [One Signal](https://onesignal.com). One Signal is a great p
 [![License](https://poser.pugx.org/ladumor/one-signal/license)](LICENSE.md)
 
 
-## :film_strip: here is video tutorials
+## :film_strip: here are video tutorials
 #### How to install and how to implement notifications and devices APIs.
 
  [<img src="https://img.youtube.com/vi/c1W7unOw3s4/0.jpg" width="250">](https://youtu.be/c1W7unOw3s4)
 
+#### how to implement Segment and Apps APIs.
+ [<img src="https://img.youtube.com/vi/mxiEZ4H2cgY/0.jpg" width="250">](https://youtu.be/mxiEZ4H2cgY)
+ 
 ## Contents
 
 - [Installation](#installation)

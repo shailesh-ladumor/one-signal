@@ -1,8 +1,14 @@
 ### [v0.4.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.4.0) (Jun 21, 2021)
 
-##### Added
-* Add User Device Mobile API support [(#7a3243d)](https://github.com/shailesh-ladumor/one-signal/commit/7a3243d30ab64e05fed5edea22386a3ea3a6ff74)
+#### Added
+* Add User Device Mobile API support [(#12)](https://github.com/shailesh-ladumor/one-signal/pull/12)  [(#7a3243d)](https://github.com/shailesh-ladumor/one-signal/commit/7a3243d30ab64e05fed5edea22386a3ea3a6ff74)
 * Readme updated
+
+### [v0.3.4](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.3.4) (Dec 25, 2020)
+
+##### Changed
+* Laravel v8.x Support add  [(#8)](https://github.com/shailesh-ladumor/one-signal/pull/8) [(ef044f)](https://github.com/shailesh-ladumor/one-signal/pull/8/commits/42e34111340519ebf9104ea0f5a3c49892ef044f)
+* fixed issue [#7](https://github.com/shailesh-ladumor/one-signal/issues/7)
 
 ### [v0.3.3](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.3.3) (July 18, 2020)
 
