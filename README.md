@@ -37,6 +37,7 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
     - [View App](#view-app)
     - [Create App](#create-app)
     - [Update App](#update-app)
+- [User Device](#user-device)
 - [Change Log](#change-log)
 - [License](#license)
 
@@ -215,6 +216,28 @@ Update a new OneSignal app.
 
 You can check [here](https://documentation.onesignal.com/reference#update-an-app) supported parameters and guide.
 
+## User Device
+You can generate a User Device APIs with just one command,
+
+`php artisan one-signal.userDevice:publish`
+
+this command generate following files,
+
+* UserDeviceAPIController
+* UserDeviceAPIRepository
+* UserDevice (model)
+* Migration
+
+Also, do not forget to add following routes in to the `api.php` file.
+
+```angular2html
+use App\Http\Controllers\API\UserDeviceAPIController;
+```
+
+```
+  Route::post('user-device/register', [UserDeviceAPIController::class, 'registerDevice']);
+  Route::get('user-device/{playerId}/update-status', [UserDeviceAPIController::class, 'updateNotificationStatus']);
+```
 
 ### Change Log
  Please see [Change Log](CHANGELOG.md) here
