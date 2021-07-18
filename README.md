@@ -7,6 +7,7 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
 [![Monthly Downloads](https://poser.pugx.org/ladumor/one-signal/d/monthly)](https://packagist.org/packages/ladumor/one-signal)
 [![License](https://poser.pugx.org/ladumor/one-signal/license)](LICENSE.md)
 
+# Give a Star if this package realy usefull to you. it's free :laughing:
 
 ## :film_strip: here are video tutorials
 #### How to install and how to implement notifications and devices APIs.
@@ -217,6 +218,8 @@ Update a new OneSignal app.
 You can check [here](https://documentation.onesignal.com/reference#update-an-app) supported parameters and guide.
 
 ## User Device
+[<img src="https://img.youtube.com/vi/wOH1qsQ3SL8/0.jpg" width="250">](https://youtu.be/wOH1qsQ3SL8)
+
 You can generate a User Device APIs with just one command,
 
 `php artisan one-signal.userDevice:publish`
