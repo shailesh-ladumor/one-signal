@@ -7,7 +7,15 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
 [![Monthly Downloads](https://poser.pugx.org/ladumor/one-signal/d/monthly)](https://packagist.org/packages/ladumor/one-signal)
 [![License](https://poser.pugx.org/ladumor/one-signal/license)](LICENSE.md)
 
-# Forked from https://github.com/shailesh-ladumor/one-signal
+# Give a Star if this package realy usefull to you. it's free :laughing:
+
+## :film_strip: here are video tutorials
+#### How to install and how to implement notifications and devices APIs.
+
+ [<img src="https://img.youtube.com/vi/c1W7unOw3s4/0.jpg" width="250">](https://youtu.be/c1W7unOw3s4)
+
+#### how to implement Segment and Apps APIs.
+ [<img src="https://img.youtube.com/vi/mxiEZ4H2cgY/0.jpg" width="250">](https://youtu.be/mxiEZ4H2cgY)
  
 ## Contents
 
