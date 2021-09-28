@@ -25,7 +25,7 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
     - [Add Facade](#add-facade)
 - [Usage](#usage)
     - [Send Push Notification](#send-push-notification)
-    - [Cancel Notification](#cencel-notification)
+    - [Cancel Notification](#cancel-notification)
     - [Customise Contents](#customise-contents)
     - [Get All Notifications](#get-all-notifications)
     - [Get Single Notification](#get-single-notification)
