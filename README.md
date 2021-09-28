@@ -25,6 +25,7 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
     - [Add Facade](#add-facade)
 - [Usage](#usage)
     - [Send Push Notification](#send-push-notification)
+    - [Cancel Notification](#cencel-notification)
     - [Customise Contents](#customise-contents)
     - [Get All Notifications](#get-all-notifications)
     - [Get Single Notification](#get-single-notification)
@@ -75,8 +76,21 @@ For send push notification, use the sendPush method by calling,
     $fields['include_player_ids'] = ['xxxxxxxx-xxxx-xxx-xxxx-yyyyyyyyy'];
     $message = 'hey!! this is test push.!'   
     
-    \OneSignal::sendPush($fields, $message);
+    OneSignal::sendPush($fields, $message);
+
+Optionally, you can obtain the id of the notification like this,
     
+    $notificationID = OneSignal::sendPush($fields, $message);
+    echo $notificationID["id"];
+    
+### Cancel Notification
+
+To cancel a notification, use the cancelNotification method by calling,
+    
+    $notificationID = 'xxxxxxxx-xxxx-xxx-xxxx-yyyyyyyyy';
+    
+    OneSignal::cancelNotification($notificationID);
+
 ### Customise Contents
 
 You can customise a contents and pass it in fields. message does not required when you pass contents
@@ -86,7 +100,7 @@ You can customise a contents and pass it in fields. message does not required wh
                               "en" => 'English Message',
                               "es" => 'Spanish Message',
                           );
-    \OneSignal::sendPush($fields);
+    OneSignal::sendPush($fields);
 ### Get All Notifications
 
 For retrieve all notifications, use the `getNotifications` method by calling,    
