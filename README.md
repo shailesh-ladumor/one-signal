@@ -34,7 +34,7 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
     - [Create Device](#get-single-device)
     - [Update Device](#update-device)
     - [Create Segment (NEED PAID PLAN)](#create-segment)
-    - [Delete Segment(NEED PAID PLAN)](#delete-segment)
+    - [Delete Segment (NEED PAID PLAN)](#delete-segment)
     - [View Apps](#view-apps)
     - [View App](#view-app)
     - [Create App](#create-app)
