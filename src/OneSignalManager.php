@@ -56,6 +56,21 @@ class OneSignalManager extends OneSignalClient
 
         return $this->post($this->getUrl(NOTIFICATIONS), json_encode($fields));
     }
+    
+    /**
+     * @param $notificationId
+     * @param null $appId
+     *
+     * @return array|mixed
+     */
+    public function cancelNotification($notificationId, $appId = null)
+    {
+        if (empty($appId)) { // take a default if does not specified
+            $appId = $this->getAppId();
+        }
+
+        return $this->delete($this->getUrl(NOTIFICATIONS.'/'.$notificationId.'?app_id='.$appId));
+    }
 
     /**
      * GET all notifications of any applications.

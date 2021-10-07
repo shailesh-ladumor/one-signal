@@ -25,6 +25,7 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
     - [Add Facade](#add-facade)
 - [Usage](#usage)
     - [Send Push Notification](#send-push-notification)
+    - [Cancel Notification](#cancel-notification)
     - [Customise Contents](#customise-contents)
     - [Get All Notifications](#get-all-notifications)
     - [Get Single Notification](#get-single-notification)
@@ -33,7 +34,7 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
     - [Create Device](#get-single-device)
     - [Update Device](#update-device)
     - [Create Segment (NEED PAID PLAN)](#create-segment)
-    - [Delete Segment(NEED PAID PLAN)](#delete-segment)
+    - [Delete Segment (NEED PAID PLAN)](#delete-segment)
     - [View Apps](#view-apps)
     - [View App](#view-app)
     - [Create App](#create-app)
@@ -42,11 +43,13 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
 - [Change Log](#change-log)
 - [License](#license)
 
+
 ## Installation
 
 Install the package by the following command,
 
     composer require ladumor/one-signal:0.4.0
+
 
 ## Publish the config file
 
@@ -54,17 +57,32 @@ Run the following command to publish config file,
 
     php artisan vendor:publish --provider="Ladumor\OneSignal\OneSignalServiceProvider"
 
+
 ## Add Provider
 
 Add the provider to your `config/app.php` into `provider` section if using lower version of laravel,
 
     Ladumor\OneSignal\OneSignalServiceProvider::class,
 
+
 ## Add Facade
 
 Add the Facade to your `config/app.php` into `aliases` section,
 
     'OneSignal' => \Ladumor\OneSignal\OneSignal::class,
+    
+
+## Add ENV data
+
+Add your api keys and OneSignal app id to your `.env`,
+
+    ONE_SIGNAL_APP_ID=XXXXXX-XXXXXX-XXXXXX-XXXXXX  (YOUR APP ID)
+    ONE_SIGNAL_AUTHORIZE=XXXXXX                    (REST API KEY)
+    ONE_SIGNAL_AUTH_KEY=XXXXXXX                    (YOUR USER AUTH KEY)
+
+You can call them into your code with,
+
+    
 
 ## Usage
 
@@ -75,8 +93,23 @@ For send push notification, use the sendPush method by calling,
     $fields['include_player_ids'] = ['xxxxxxxx-xxxx-xxx-xxxx-yyyyyyyyy'];
     $message = 'hey!! this is test push.!'   
     
-    \OneSignal::sendPush($fields, $message);
+    OneSignal::sendPush($fields, $message);
+
+Optionally, you can obtain the id of the notification like this,
     
+    $notificationID = OneSignal::sendPush($fields, $message);
+    echo $notificationID["id"];
+    
+    
+### Cancel Notification
+
+To cancel a notification, use the cancelNotification method by calling,
+    
+    $notificationID = 'xxxxxxxx-xxxx-xxx-xxxx-yyyyyyyyy';
+    
+    OneSignal::cancelNotification($notificationID);
+
+
 ### Customise Contents
 
 You can customise a contents and pass it in fields. message does not required when you pass contents
@@ -86,7 +119,9 @@ You can customise a contents and pass it in fields. message does not required wh
                               "en" => 'English Message',
                               "es" => 'Spanish Message',
                           );
-    \OneSignal::sendPush($fields);
+    OneSignal::sendPush($fields);
+    
+    
 ### Get All Notifications
 
 For retrieve all notifications, use the `getNotifications` method by calling,    
@@ -94,12 +129,14 @@ For retrieve all notifications, use the `getNotifications` method by calling,
     OneSignal::getNotifications();
 You can check [here](https://documentation.onesignal.com/reference#section-result-format-view-notifications) return response format. 
     
+
 ### Get Single Notification
 
 For retrieve single notification, use the `getNotification` method with id param by calling, 
     
     OneSignal::getNotification($notificationId);    
 You can check [here](https://documentation.onesignal.com/reference#section-result-format-view-notification) return response format.
+
 
 ### Get All Devices
 
@@ -108,12 +145,14 @@ For retrieve all user devices, use the `getDevices` method by calling,
     OneSignal::getDevices();
 You can check [here](https://documentation.onesignal.com/reference#view-devices) return response format. 
 
+
 ### Get Single Device
 
 For retrieve single Devices, use the `getDevice` method with id param by calling, 
     
     OneSignal::getDevice($deviceId);    
 You can check [here](https://documentation.onesignal.com/reference#view-device) return response format.
+
 
 ### Create Device
 
@@ -132,6 +171,7 @@ For add a device in your application, use the `addDevice` method by calling, if 
         
      return OneSignal::addDevice($fields);   
 You can check [here](https://documentation.onesignal.com/reference#section-example-code-add-a-device) supported parameters and guide.
+
 
 ### Update Device
 
@@ -153,6 +193,7 @@ For update a device in your application, use the `addDevice` method by calling, 
      return OneSignal::updateDevice($fields, $playerId);   
 You can check [here](https://documentation.onesignal.com/reference#section-body-parameters) supported parameters and guide.
 
+
 ### Create Segment
  #### NOTE: REQUIRED ONE-SIGNAL [PAID PLAN](https://documentation.onesignal.com/docs/paid-plan-benefits)
 For add a new segment in your application, use the `createSegment` method by calling,
@@ -168,6 +209,7 @@ You can check [here](https://documentation.onesignal.com/reference#create-segmen
 
     OneSignal::deleteSegment('YOUR_SEGMENT_ID')
     
+
 ### Delete Segment
  #### NOTE: REQUIRED ONE-SIGNAL [PAID PLAN](https://documentation.onesignal.com/docs/paid-plan-benefits)
 
@@ -175,12 +217,14 @@ You can check [here](https://documentation.onesignal.com/reference#delete-segmen
 ## Apps
 Note*: `Auth key must be set in one-signal.php` how to get [auth_key](https://documentation.onesignal.com/docs/accounts-and-keys#section-user-auth-key)?
 
+
 ### View Apps
 View the details of all of your current OneSignal apps
 
      $apps = OneSignal::getApps();
      
 You can check [here](https://documentation.onesignal.com/reference#view-apps-apps) api response.
+
 
 ### View App
 View the details of single of your current OneSignal app or other app by passing app id.
@@ -194,6 +238,7 @@ View the details of single of your current OneSignal app or other app by passing
      
 You can check [here](https://documentation.onesignal.com/reference#view-an-app) api response.
 
+
 ### Create App
 Creates a new OneSignal app.
 
@@ -204,6 +249,7 @@ Creates a new OneSignal app.
      OneSignal::createApp($fields);
 
 You can check [here](https://documentation.onesignal.com/reference#create-an-app) supported parameters and guide.
+
 
 ### Update App
 Update a new OneSignal app.
@@ -216,6 +262,7 @@ Update a new OneSignal app.
      // you can pass second param as a appId if you want to update other app.. default take from config.
 
 You can check [here](https://documentation.onesignal.com/reference#update-an-app) supported parameters and guide.
+
 
 ## User Device
 [<img src="https://img.youtube.com/vi/wOH1qsQ3SL8/0.jpg" width="250">](https://youtu.be/wOH1qsQ3SL8)
