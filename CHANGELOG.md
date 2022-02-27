@@ -1,3 +1,9 @@
+### [v0.4.2](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.4.2) (Feb 27, 2022)
+
+#### Added
+* Laravel 9 support add
+* Delete Device Support Add
+
 ### [v0.4.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.4.0) (Jun 21, 2021)
 
 #### Added
