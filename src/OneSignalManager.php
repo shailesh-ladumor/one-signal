@@ -172,6 +172,20 @@ class OneSignalManager extends OneSignalClient
     }
 
     /**
+     * delete existing device on your application
+     *
+     * @param int $playerId
+     *
+     * @return array|mixed
+     */
+    public function deleteDevice($playerId)
+    {
+        $url = $this->getUrl(DEVICES) . '/' . $playerId. '?app_id='.$this->getAppId();
+
+        return $this->delete( $url);
+    }
+
+    /**
      * Create Segment
      *
      * @param $fields

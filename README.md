@@ -33,6 +33,7 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
     - [Get Single Device](#get-single-device)
     - [Create Device](#get-single-device)
     - [Update Device](#update-device)
+    - [Delete Device](#delete-device)
     - [Create Segment (NEED PAID PLAN)](#create-segment)
     - [Delete Segment (NEED PAID PLAN)](#delete-segment)
     - [View Apps](#view-apps)
@@ -193,6 +194,10 @@ For update a device in your application, use the `addDevice` method by calling, 
      return OneSignal::updateDevice($fields, $playerId);   
 You can check [here](https://documentation.onesignal.com/reference#section-body-parameters) supported parameters and guide.
 
+### Delete Device
+Delete existing device on your application
+
+```OneSignal::deleteDevice($deviceId);```
 
 ### Create Segment
  #### NOTE: REQUIRED ONE-SIGNAL [PAID PLAN](https://documentation.onesignal.com/docs/paid-plan-benefits)

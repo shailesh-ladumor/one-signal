@@ -17,8 +17,8 @@
     }
   ],
   "require": {
-    "php": ">=5.4.0",
-    "illuminate/support": ">=5.0|^8.0",
+    "php": "^7.2.5|^8.0",
+    "illuminate/support": "^9.0|^8.0|^7.0|^6.0",
     "ext-curl": "*",
     "ext-json": "*"
   },
