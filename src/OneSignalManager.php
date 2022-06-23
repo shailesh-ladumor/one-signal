@@ -38,20 +38,36 @@ class OneSignalManager extends OneSignalClient
      *
      * @param $fields
      * @param string $message
+     * @param string $title
+     * @param string $lang
+     * @param string $template_id
      *
      * @return array|mixed
      */
-    public function sendPush($fields, $message = '')
+    public function sendPush($fields, $message = '', $title = '', $lang = 'en', $template_id = '')
     {
+        if(!in_array($lang, ['en', 'ar', 'bs', 'ca', 'zh-Hans', 'zh-Hant', 'hr', 'cs', 'da', 'de', 'el', 'id', 
+            'ru', 'es', 'uk', 'it', 'fr'])){
+          return  response()->json([
+                'status' => false,
+                'message' => 'this language is not supported in one-signal'
+            ], 400);
+        }
         $content = array(
-            "en" => $message,
+            $lang => $message,
         );
-
+        $subtitle = array(
+            $lang => $title,
+        );
         $fields['app_id']          = $this->getAppId();
         $fields['mutable_content'] = $this->getMutableContent();
 
         if ( ! isset($fields['contents']) || empty($fields['contents'])) {
             $fields['contents'] = $content;
+            $fields['headings'] = $subtitle;
+            if($template_id){
+                $fields['template_id'] = $template_id;
+            }
         }
 
         return $this->post($this->getUrl(NOTIFICATIONS), json_encode($fields));
