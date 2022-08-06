@@ -197,7 +197,9 @@ You can check [here](https://documentation.onesignal.com/reference#section-body-
 ### Delete Device
 Delete existing device on your application
 
-```OneSignal::deleteDevice($deviceId);```
+```injectablephp
+OneSignal::deleteDevice($deviceId);
+```
 
 ### Create Segment
  #### NOTE: REQUIRED ONE-SIGNAL [PAID PLAN](https://documentation.onesignal.com/docs/paid-plan-benefits)
@@ -246,13 +248,13 @@ You can check [here](https://documentation.onesignal.com/reference#view-an-app) 
 
 ### Create App
 Creates a new OneSignal app.
-
+ 
      $fields = array(
             'name' => "TestByMe"
         );
     
      OneSignal::createApp($fields);
-
+ 
 You can check [here](https://documentation.onesignal.com/reference#create-an-app) supported parameters and guide.
 
 
@@ -274,7 +276,9 @@ You can check [here](https://documentation.onesignal.com/reference#update-an-app
 
 You can generate a User Device APIs with just one command,
 
-`php artisan one-signal.userDevice:publish`
+```injectablephp
+php artisan one-signal.userDevice:publish
+```
 
 this command generate following files,
 
@@ -285,11 +289,11 @@ this command generate following files,
 
 Also, do not forget to add following routes in to the `api.php` file.
 
-```angular2html
+```injectablephp
 use App\Http\Controllers\API\UserDeviceAPIController;
 ```
 
-```
+```injectablephp
   Route::post('user-device/register', [UserDeviceAPIController::class, 'registerDevice']);
   Route::get('user-device/{playerId}/update-status', [UserDeviceAPIController::class, 'updateNotificationStatus']);
 ```
