@@ -62,7 +62,7 @@ class PublishUserDevice extends Command
         $this->createFile($repoDir. DIRECTORY_SEPARATOR, 'UserDeviceRepository.php', $repoTemplate);
         $this->info('UserDeviceRepository published.');
 
-        $fileName = date('Y_m_d_His').'_'.'create_user_device_table.php';
+        $fileName = date('Y_m_d_His').'_'.'create_user_devices_table.php';
 
         $repoTemplate = file_get_contents(__DIR__.'/../stubs/CreateUserDeviceTable.stub');
         $this->createFile(base_path('database/migrations/'), $fileName, $repoTemplate);
