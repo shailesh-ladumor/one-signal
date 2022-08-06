@@ -1,3 +1,8 @@
+### [v0.4.3](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.4.3) (Feb 27, 2022)
+
+#### Fixed
+* fixed bug: The migration is thrown error (Laravel 8.83.23) : PHP Fatal error: Cannot declare class CreateUserDevicesTable,  [(#21)](https://github.com/shailesh-ladumor/one-signal/pull/21) 
+ 
 ### [v0.4.2](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.4.2) (Feb 27, 2022)
 
 #### Added
