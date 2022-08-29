@@ -46,7 +46,7 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
 - [License](#license)
 
 ## Watch Other Lavavel tutorial here
-[<img src="https://img.youtube.com/vi/yMtsgBsqDQs/0.jpg" width="580">]([https://www.youtube.com/c/LaravelPackageTutorial](https://www.youtube.com/channel/UCuCjzuwBqMqFdh0EU-UwQ-w?sub_confirmation=1))
+[<img src="https://img.youtube.com/vi/yMtsgBsqDQs/0.jpg" width="580">](https://www.youtube.com/channel/UCuCjzuwBqMqFdh0EU-UwQ-w?sub_confirmation=1))
 
 ## Installation
 
