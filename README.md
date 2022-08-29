@@ -17,6 +17,7 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
 #### how to implement Segment and Apps APIs.
  [<img src="https://img.youtube.com/vi/mxiEZ4H2cgY/0.jpg" width="250">](https://youtu.be/mxiEZ4H2cgY)
  
+ 
 ## Contents
 
 - [Installation](#installation)
@@ -44,6 +45,8 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
 - [Change Log](#change-log)
 - [License](#license)
 
+## Watch Other Lavavel tutorial here
+[<img src="https://img.youtube.com/vi/yMtsgBsqDQs/0.jpg" width="580">]([https://www.youtube.com/c/LaravelPackageTutorial](https://www.youtube.com/channel/UCuCjzuwBqMqFdh0EU-UwQ-w?sub_confirmation=1))
 
 ## Installation
 
