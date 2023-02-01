@@ -90,30 +90,13 @@ class OneSignalManager extends OneSignalClient
     /**
      * GET all outcomes of any applications.
      * Outcomes are only accessible for around 30 days
-     * 
-     * @param string $outcomeNames
-     * @param string $outcomeTimeRange
-     * @param string $outcomePlatforms
-     * @param string $outcomeAttribution
+     *
+     * @param array $params
      *
      * @return array|mixed
      */
-    public function getOutcomes($outcomeNames = '', $outcomeTimeRange = '', $outcomePlatforms = '', $outcomeAttribution = '')
+    public function getOutcomes($params = [])
     {
-        $params = [];
-        if (!empty($outcomeNames)) {
-            $params[] = 'outcome_names=' . $outcomeNames;
-        }
-        if (!empty($outcomeTimeRange)) {
-            $params[] = 'outcome_time_range=' . $outcomeTimeRange;
-        }
-        if (!empty($outcomePlatforms)) {
-            $params[] = 'outcome_platforms=' . $outcomePlatforms;
-        }
-        if (!empty($outcomeAttribution)) {
-            $params[] = 'outcome_attribution=' . $outcomeAttribution;
-        }
-
         $url = $this->getUrl(APPS) . '/outcomes' . $this->getAppId();
 
         if (count($params) > 0) {

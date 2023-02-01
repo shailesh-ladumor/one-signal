@@ -40,6 +40,7 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
     - [View App](#view-app)
     - [Create App](#create-app)
     - [Update App](#update-app)
+    - [View Outcomes](#view-outcomes)
 - [User Device](#user-device)
 - [Change Log](#change-log)
 - [License](#license)
@@ -267,6 +268,24 @@ Update a new OneSignal app.
      // you can pass second param as a appId if you want to update other app.. default take from config.
 
 You can check [here](https://documentation.onesignal.com/reference#update-an-app) supported parameters and guide.
+
+
+
+### View Outcomes
+Update a new OneSignal app.
+
+     $fields = array(
+            'outcome_names'       => "os__click.count",
+            'outcome_time_range'  => '1h',
+            'outcome_platform'    => 0,
+            'outcome_attribution' => 'direct'
+        );
+
+     OneSignal::getOutcomes($fields);   // with params
+     OneSignal::getOutcomes();  // without any params
+     // you can pass params in this method, it's optional.
+
+You can check [here](https://documentation.onesignal.com/reference/view-outcomes) supported parameters and guide.
 
 
 ## User Device
