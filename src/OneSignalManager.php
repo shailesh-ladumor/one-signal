@@ -56,7 +56,7 @@ class OneSignalManager extends OneSignalClient
 
         return $this->post($this->getUrl(NOTIFICATIONS), json_encode($fields));
     }
-    
+
     /**
      * @param $notificationId
      * @param null $appId
@@ -83,6 +83,42 @@ class OneSignalManager extends OneSignalClient
     public function getNotifications($limit = 50, $offset = 0)
     {
         $url = $this->getUrl(NOTIFICATIONS) . '?app_id=' . $this->getAppId() . '&limit=' . $limit . '&offset=' . $offset;
+
+        return $this->get($url);
+    }
+
+    /**
+     * GET all outcomes of any applications.
+     * Outcomes are only accessible for around 30 days
+     * 
+     * @param string $outcomeNames
+     * @param string $outcomeTimeRange
+     * @param string $outcomePlatforms
+     * @param string $outcomeAttribution
+     *
+     * @return array|mixed
+     */
+    public function getOutcomes($outcomeNames = '', $outcomeTimeRange = '', $outcomePlatforms = '', $outcomeAttribution = '')
+    {
+        $params = [];
+        if (!empty($outcomeNames)) {
+            $params[] = 'outcome_names=' . $outcomeNames;
+        }
+        if (!empty($outcomeTimeRange)) {
+            $params[] = 'outcome_time_range=' . $outcomeTimeRange;
+        }
+        if (!empty($outcomePlatforms)) {
+            $params[] = 'outcome_platforms=' . $outcomePlatforms;
+        }
+        if (!empty($outcomeAttribution)) {
+            $params[] = 'outcome_attribution=' . $outcomeAttribution;
+        }
+
+        $url = $this->getUrl(APPS) . '/outcomes' . $this->getAppId();
+
+        if (count($params) > 0) {
+            $url = $url . '?' . join('&', $params);
+        }
 
         return $this->get($url);
     }
