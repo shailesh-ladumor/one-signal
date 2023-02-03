@@ -53,7 +53,7 @@ Laravel One Signal is Laravel Wrapper for [One Signal](https://onesignal.com). O
 
 Install the package by the following command,
 
-    composer require ladumor/one-signal:0.4.3
+    composer require ladumor/one-signal:0.4.4
 
 
 ## Publish the config file
