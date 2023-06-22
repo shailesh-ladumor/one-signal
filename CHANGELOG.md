@@ -1,3 +1,11 @@
+### [v1.0.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v1.0.0) (Jun 22, 2023)
+#### Added
+* Laravel 10 support add
+  
+### [v0.4.4](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.4.4) (Feb 1, 2023)
+#### Added
+* add [View Outcomes](https://documentation.onesignal.com/reference/view-outcomes) support
+
 ### [v0.4.3](https://github.com/shailesh-ladumor/one-signal/releases/tag/v0.4.3) (Feb 27, 2022)
 
 #### Fixed
