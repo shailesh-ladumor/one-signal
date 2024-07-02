@@ -13,7 +13,7 @@ class OneSignalServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $configPath = __DIR__.'/../config/one-signal.php';
 
@@ -27,7 +27,7 @@ class OneSignalServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->singleton('one-signal', function ($app) {
             return new OneSignalManager();
