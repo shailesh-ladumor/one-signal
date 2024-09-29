@@ -42,18 +42,67 @@ class OneSignalManager extends OneSignalClient
      *
      * @return array|mixed
      */
-    public function sendPush(array $fields, string $message = ''): mixed
+    public function sendPush(array $fields, string $message): mixed
     {
+         if (empty(message)) {
+            throw new \InvalidArgumentException('push content is required');
+        }
+        
         $content = array(
             "en" => $message,
         );
 
         $fields['app_id'] = $this->getAppId();
         $fields['mutable_content'] = $this->getMutableContent();
+        $fields['target_channel'] = 'push';
 
         if (empty($fields['contents'])) {
             $fields['contents'] = $content;
         }
+
+        return $this->post($this->getUrl(NOTIFICATIONS), json_encode($fields));
+    }
+    
+    /**
+     * Send an Email to users
+     *
+     * @param array $fields
+     *
+     * @return array|mixed
+     */
+    public function sendEmail(array $fields): mixed
+    {
+        $fields['app_id'] = $this->getAppId();
+        $fields['target_channel'] = 'email';
+       
+
+        if (empty($fields['email_subject'])) {
+            throw new \InvalidArgumentException('email_subject is required');
+        }
+
+        if (empty($fields['email_body'])) {
+            throw new \InvalidArgumentException('email_body is required');
+        }
+
+
+        return $this->post($this->getUrl(NOTIFICATIONS), json_encode($fields));
+    }
+
+    /**
+     * Send an SMS to users
+     *
+     * @param array $fields
+     *
+     * @return array|mixed
+     */
+    public function sendSMS(array $fields): mixed
+    {
+        $fields['app_id'] = $this->getAppId();
+        $fields['target_channel'] = 'sms';
+        $content = array(
+            "en" => $message,
+        );
+
 
         return $this->post($this->getUrl(NOTIFICATIONS), json_encode($fields));
     }
@@ -235,6 +284,32 @@ class OneSignalManager extends OneSignalClient
         }
 
         return $this->delete($this->getUrl(APPS . '/' . $appId . '/' . SEGMENTS . '/' . $segmentId));
+    }
+    
+    /**
+     * View segments for an app
+     *
+     * @param string|null $appId
+     *
+     * @return array|mixed
+     */
+    public function viewSegments(int $limit = 0, $offset = 0,string $appId = null): mixed
+    {
+        if (empty($appId)) {
+            $appId = $this->getAppId();
+        }
+
+        $url = $this->getUrl(APPS . '/' . $appId . '/' . SEGMENTS);
+       
+        // Set query params here
+        if ($limit > 0) {
+            $url .= '?limit=' . $limit;
+            if ($offset > 0) {
+                $url .= '&offset=' . $offset;
+            }
+        } 
+
+        return $this->get($url);
     }
 
     /**
