@@ -123,16 +123,19 @@ class OneSignalManager extends OneSignalClient
     }
 
     /**
-     * GET all notifications of any applications.
+     * GET all notifications/messages of any applications.
      *
-     * @param int $limit
-     * @param int $offset
+     * @param array $params
      *
      * @return array|mixed
      */
-    public function getNotifications(int $limit = 50, int $offset = 0): mixed
+    public function viewMessasges(array $params = []): mixed
     {
-        $url = $this->getUrl(NOTIFICATIONS) . '?app_id=' . $this->getAppId() . '&limit=' . $limit . '&offset=' . $offset;
+        $url = $this->getUrl(NOTIFICATIONS) . '?app_id=' . $this->getAppId();
+
+        if (count($params) > 0) {
+            $url = $url . join('&', $params);
+        }
 
         return $this->get($url);
     }
@@ -157,7 +160,7 @@ class OneSignalManager extends OneSignalClient
     }
 
     /**
-     * Get Single notification
+     * Get Single notification/message
      *
      * @param string $notificationId
      *
@@ -170,89 +173,6 @@ class OneSignalManager extends OneSignalClient
         return $this->get($url);
     }
 
-    /**
-     * GET all devices of any applications.
-     *
-     * @param int $limit
-     * @param int $offset
-     *
-     * @return array|mixed
-     */
-    public function getDevices(int $limit = 50, int $offset = 0): mixed
-    {
-        $url = $this->getUrl(DEVICES) . '?app_id=' . $this->getAppId() . '&limit=' . $limit . '&offset=' . $offset;
-
-        return $this->get($url);
-    }
-
-    /**
-     * Get Single Device information
-     *
-     * @param string $playerId
-     *
-     * @return object
-     */
-    public function getDevice(string $playerId): object
-    {
-        $url = $this->getUrl(DEVICES) . '/' . $playerId . "?app_id=" . $this->getAppId();
-
-        return $this->get($url);
-    }
-
-    /**
-     * Add new device on your application
-     *
-     * @param array $fields
-     *
-     * @return array|mixed
-     */
-    public function addDevice(array $fields): mixed
-    {
-        if (empty($fields['app_id'])) {
-            $fields['app_id'] = $this->getAppId();
-        }
-
-        if (empty($fields['language'])) {
-            $fields['language'] = "en";
-        }
-
-        return $this->post($this->getUrl(DEVICES), json_encode($fields));
-    }
-
-    /**
-     * update existing device on your application
-     *
-     * @param array $fields
-     * @param string $playerId
-     *
-     * @return array|mixed
-     */
-    public function updateDevice(array $fields, string $playerId): mixed
-    {
-        if (empty($fields['app_id'])) {
-            $fields['app_id'] = $this->getAppId();
-        }
-
-        if (empty($fields['language'])) {
-            $fields['language'] = "en";
-        }
-
-        return $this->put($this->getUrl(DEVICES) . '/' . $playerId, json_encode($fields));
-    }
-
-    /**
-     * delete existing device on your application
-     *
-     * @param string $playerId
-     *
-     * @return array|mixed
-     */
-    public function deleteDevice(string $playerId): mixed
-    {
-        $url = $this->getUrl(DEVICES) . '/' . $playerId . '?app_id=' . $this->getAppId();
-
-        return $this->delete($url);
-    }
 
     /**
      * Create Segment
@@ -373,5 +293,95 @@ class OneSignalManager extends OneSignalClient
         }
 
         return $this->put($this->getUrl(APPS . '/' . $appId), json_encode($fields));
+    }
+
+
+        /**
+     * @deprecated
+     * GET all devices of any applications.
+     *
+     * @param int $limit
+     * @param int $offset
+     *
+     * @return array|mixed
+     */
+    public function getDevices(int $limit = 50, int $offset = 0): mixed
+    {
+        $url = $this->getUrl(DEVICES) . '?app_id=' . $this->getAppId() . '&limit=' . $limit . '&offset=' . $offset;
+
+        return $this->get($url);
+    }
+
+    /**
+     * @deprecated
+     * Get Single Device information
+     *
+     * @param string $playerId
+     *
+     * @return object
+     */
+    public function getDevice(string $playerId): object
+    {
+        $url = $this->getUrl(DEVICES) . '/' . $playerId . "?app_id=" . $this->getAppId();
+
+        return $this->get($url);
+    }
+
+    /**
+     * @deprecated
+     * Add new device on your application
+     *
+     * @param array $fields
+     *
+     * @return array|mixed
+     */
+    public function addDevice(array $fields): mixed
+    {
+        if (empty($fields['app_id'])) {
+            $fields['app_id'] = $this->getAppId();
+        }
+
+        if (empty($fields['language'])) {
+            $fields['language'] = "en";
+        }
+
+        return $this->post($this->getUrl(DEVICES), json_encode($fields));
+    }
+
+    /**
+     * @deprecated
+     * update existing device on your application
+     *
+     * @param array $fields
+     * @param string $playerId
+     *
+     * @return array|mixed
+     */
+    public function updateDevice(array $fields, string $playerId): mixed
+    {
+        if (empty($fields['app_id'])) {
+            $fields['app_id'] = $this->getAppId();
+        }
+
+        if (empty($fields['language'])) {
+            $fields['language'] = "en";
+        }
+
+        return $this->put($this->getUrl(DEVICES) . '/' . $playerId, json_encode($fields));
+    }
+
+    /**
+     * @deprecated
+     * delete existing device on your application
+     *
+     * @param string $playerId
+     *
+     * @return array|mixed
+     */
+    public function deleteDevice(string $playerId): mixed
+    {
+        $url = $this->getUrl(DEVICES) . '/' . $playerId . '?app_id=' . $this->getAppId();
+
+        return $this->delete($url);
     }
 }
