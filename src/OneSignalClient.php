@@ -32,12 +32,19 @@ class OneSignalClient
 
     /**
      * @param string $url
+     * @param array $params
      *
      * @return string $url
      */
-    public function getUrl(string $url): string
+    public function getUrl(string $url, array $params = []): string
     {
-        return $this->url . $url;
+        $url = $this->url . $url;
+
+        if (count($params) > 0) {
+            $url = $url . '?' . join('&', $params);
+        }
+
+        return $url;
     }
 
     /**
@@ -107,20 +114,23 @@ class OneSignalClient
 
     /**
      * return headers
+     *
      * @return array
      */
     protected function getHeaders(): array
     {
-        return array(
+        return [
             'Content-Type: application/json; charset=utf-8',
             'X-Requested-With:XMLHttpRequest',
             'Authorization: Basic ' . $this->getAuthorization(),
-        );
+        ];
     }
 
     /**
      * GEt Method
+     *
      * @param string $url
+     *
      * @return array|mixed
      */
     public function get(string $url): mixed
@@ -128,16 +138,16 @@ class OneSignalClient
         try {
             $curl = curl_init();
 
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => $url,
+            curl_setopt_array($curl, [
+                CURLOPT_URL            => $url,
                 CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "GET",
-                CURLOPT_HTTPHEADER => $this->getHeaders(),
-            ));
+                CURLOPT_ENCODING       => "",
+                CURLOPT_MAXREDIRS      => 10,
+                CURLOPT_TIMEOUT        => 30,
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST  => "GET",
+                CURLOPT_HTTPHEADER     => $this->getHeaders(),
+            ]);
 
             $response = curl_exec($curl);
             $err = curl_error($curl);
@@ -149,7 +159,7 @@ class OneSignalClient
             return json_decode($response, true);
         } catch (\Exception $exception) {
             return [
-                'code' => $exception->getCode(),
+                'code'    => $exception->getCode(),
                 'message' => $exception->getMessage(),
             ];
         }
@@ -157,6 +167,7 @@ class OneSignalClient
 
     /**
      * Post Method
+     *
      * @param string $url
      * @param string $fields
      *
@@ -184,7 +195,7 @@ class OneSignalClient
             return json_decode($response, true); // return success
         } catch (\Exception $exception) {
             return [
-                'code' => $exception->getCode(),
+                'code'    => $exception->getCode(),
                 'message' => $exception->getMessage(),
             ];
         }
@@ -192,6 +203,7 @@ class OneSignalClient
 
     /**
      * Put Method
+     *
      * @param string $url
      * @param string $fields
      *
@@ -219,7 +231,7 @@ class OneSignalClient
             return json_decode($response, true); // return success
         } catch (\Exception $exception) {
             return [
-                'code' => $exception->getCode(),
+                'code'    => $exception->getCode(),
                 'message' => $exception->getMessage(),
             ];
         }
@@ -227,6 +239,7 @@ class OneSignalClient
 
     /**
      * Delete Method
+     *
      * @param string $url
      *
      * @return array|mixed
@@ -252,7 +265,7 @@ class OneSignalClient
             return json_decode($response, true); // return success
         } catch (\Exception $exception) {
             return [
-                'code' => $exception->getCode(),
+                'code'    => $exception->getCode(),
                 'message' => $exception->getMessage(),
             ];
         }

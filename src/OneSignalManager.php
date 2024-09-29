@@ -44,13 +44,9 @@ class OneSignalManager extends OneSignalClient
      */
     public function sendPush(array $fields, string $message): mixed
     {
-         if (empty(message)) {
-            throw new \InvalidArgumentException('push content is required');
-        }
-        
-        $content = array(
+        $content = [
             "en" => $message,
-        );
+        ];
 
         $fields['app_id'] = $this->getAppId();
         $fields['mutable_content'] = $this->getMutableContent();
@@ -62,7 +58,7 @@ class OneSignalManager extends OneSignalClient
 
         return $this->post($this->getUrl(NOTIFICATIONS), json_encode($fields));
     }
-    
+
     /**
      * Send an Email to users
      *
@@ -74,7 +70,6 @@ class OneSignalManager extends OneSignalClient
     {
         $fields['app_id'] = $this->getAppId();
         $fields['target_channel'] = 'email';
-       
 
         if (empty($fields['email_subject'])) {
             throw new \InvalidArgumentException('email_subject is required');
@@ -84,7 +79,6 @@ class OneSignalManager extends OneSignalClient
             throw new \InvalidArgumentException('email_body is required');
         }
 
-
         return $this->post($this->getUrl(NOTIFICATIONS), json_encode($fields));
     }
 
@@ -92,17 +86,21 @@ class OneSignalManager extends OneSignalClient
      * Send an SMS to users
      *
      * @param array $fields
+     * @param string $message
      *
      * @return array|mixed
      */
-    public function sendSMS(array $fields): mixed
+    public function sendSMS(array $fields, string $message = ''): mixed
     {
         $fields['app_id'] = $this->getAppId();
         $fields['target_channel'] = 'sms';
-        $content = array(
+        $content = [
             "en" => $message,
-        );
+        ];
 
+        if (empty($fields['contents'])) {
+            $fields['contents'] = $content;
+        }
 
         return $this->post($this->getUrl(NOTIFICATIONS), json_encode($fields));
     }
@@ -129,7 +127,7 @@ class OneSignalManager extends OneSignalClient
      *
      * @return array|mixed
      */
-    public function viewMessasges(array $params = []): mixed
+    public function viewMessages(array $params = []): mixed
     {
         $url = $this->getUrl(NOTIFICATIONS) . '?app_id=' . $this->getAppId();
 
@@ -150,11 +148,7 @@ class OneSignalManager extends OneSignalClient
      */
     public function getOutcomes(array $params = []): mixed
     {
-        $url = $this->getUrl(APPS) . '/outcomes' . $this->getAppId();
-
-        if (count($params) > 0) {
-            $url = $url . '?' . join('&', $params);
-        }
+        $url = $this->getUrl(APPS . '/outcomes' . $this->getAppId(), $params);
 
         return $this->get($url);
     }
@@ -166,13 +160,29 @@ class OneSignalManager extends OneSignalClient
      *
      * @return object
      */
-    public function getNotification(string $notificationId): object
+    public function getMessage(string $notificationId): object
     {
         $url = $this->getUrl(NOTIFICATIONS) . '/' . $notificationId . "?app_id=" . $this->getAppId();
 
         return $this->get($url);
     }
 
+    /**
+     * Get Message History
+     * Query params are optional and supported param email,events
+     *
+     * @param string $notificationId - notification id
+     * @param array $params - query params (optional)
+     *
+     * @return object|array|mixed
+     */
+    public function getMessageHistory(string $notificationId, array $params = []): object
+    {
+        $partUrl = DIRECTORY_SEPARATOR . $notificationId . "/history?app_id=" . $this->getAppId();
+        $url = $this->getUrl(NOTIFICATIONS . $partUrl);
+
+        return $this->get($url);
+    }
 
     /**
      * Create Segment
@@ -205,7 +215,7 @@ class OneSignalManager extends OneSignalClient
 
         return $this->delete($this->getUrl(APPS . '/' . $appId . '/' . SEGMENTS . '/' . $segmentId));
     }
-    
+
     /**
      * View segments for an app
      *
@@ -213,21 +223,21 @@ class OneSignalManager extends OneSignalClient
      *
      * @return array|mixed
      */
-    public function viewSegments(int $limit = 0, $offset = 0,string $appId = null): mixed
+    public function viewSegments(int $limit = 0, $offset = 0, string $appId = null): mixed
     {
         if (empty($appId)) {
             $appId = $this->getAppId();
         }
 
         $url = $this->getUrl(APPS . '/' . $appId . '/' . SEGMENTS);
-       
+
         // Set query params here
         if ($limit > 0) {
             $url .= '?limit=' . $limit;
             if ($offset > 0) {
                 $url .= '&offset=' . $offset;
             }
-        } 
+        }
 
         return $this->get($url);
     }
@@ -296,14 +306,14 @@ class OneSignalManager extends OneSignalClient
     }
 
 
-        /**
-     * @deprecated
-     * GET all devices of any applications.
-     *
+    /**
      * @param int $limit
      * @param int $offset
      *
      * @return array|mixed
+     * @deprecated
+     * GET all devices of any applications.
+     *
      */
     public function getDevices(int $limit = 50, int $offset = 0): mixed
     {
@@ -313,12 +323,12 @@ class OneSignalManager extends OneSignalClient
     }
 
     /**
-     * @deprecated
-     * Get Single Device information
-     *
      * @param string $playerId
      *
      * @return object
+     * @deprecated
+     * Get Single Device information
+     *
      */
     public function getDevice(string $playerId): object
     {
@@ -328,12 +338,12 @@ class OneSignalManager extends OneSignalClient
     }
 
     /**
-     * @deprecated
-     * Add new device on your application
-     *
      * @param array $fields
      *
      * @return array|mixed
+     * @deprecated
+     * Add new device on your application
+     *
      */
     public function addDevice(array $fields): mixed
     {
@@ -349,13 +359,13 @@ class OneSignalManager extends OneSignalClient
     }
 
     /**
-     * @deprecated
-     * update existing device on your application
-     *
      * @param array $fields
      * @param string $playerId
      *
      * @return array|mixed
+     * @deprecated
+     * update existing device on your application
+     *
      */
     public function updateDevice(array $fields, string $playerId): mixed
     {
@@ -371,12 +381,12 @@ class OneSignalManager extends OneSignalClient
     }
 
     /**
-     * @deprecated
-     * delete existing device on your application
-     *
      * @param string $playerId
      *
      * @return array|mixed
+     * @deprecated
+     * delete existing device on your application
+     *
      */
     public function deleteDevice(string $playerId): mixed
     {
