@@ -238,6 +238,42 @@ class OneSignalClient
     }
 
     /**
+     * Patch Method
+     *
+     * @param string $url
+     * @param string $fields
+     *
+     * @return array|mixed
+     */
+    public function patch(string $url, string $fields): mixed
+    {
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $this->getHeaders());
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_HEADER, false);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+            $response = curl_exec($ch);
+            curl_close($ch);
+
+            if (!empty($err)) { // return  error
+                return json_decode($err, true);
+            }
+
+            return json_decode($response, true); // return success
+        } catch (\Exception $exception) {
+            return [
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ];
+        }
+    }
+
+    /**
      * Delete Method
      *
      * @param string $url
