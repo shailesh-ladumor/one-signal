@@ -405,6 +405,7 @@ class OneSignalManager extends OneSignalClient
     }
 
     /** This API lets you start a Live Activity by sending a Push Notification.
+     *
      * @param string $activityType
      * @param array $fields
      *
@@ -432,6 +433,7 @@ class OneSignalManager extends OneSignalClient
         $url = $this->getUrl(APPS . '/' . $this->getAppId() . '/live_activities/' . $activityId . '/notifications');
         return $this->post($url, json_encode($fields));
     }
+
     /**
      * Create a new user.
      *
@@ -450,6 +452,7 @@ class OneSignalManager extends OneSignalClient
      *
      * @param string $aliasLabel The type of alias (e.g. 'external_id', 'onesignal_id')
      * @param string $aliasId The value of the alias
+     *
      * @return mixed
      * @throws InvalidArgumentException
      */
@@ -492,11 +495,14 @@ class OneSignalManager extends OneSignalClient
      */
     public function deleteUser(string $aliasLabel, string $aliasId): mixed
     {
+        // Validations
         $this->checkEmptyValidation($aliasLabel, 'alias_label');
         $this->checkEmptyValidation($aliasId, 'alias_id');
 
+        // Prepare URL
         $url = $this->getUrl(APPS . '/' . $this->getAppId() . '/' . USERS_BY . '/' . $aliasLabel . '/' . $aliasId);
 
+        // Execute API
         return $this->delete($url);
     }
 
@@ -505,16 +511,21 @@ class OneSignalManager extends OneSignalClient
      *
      * @param string $aliasLabel The type of alias (e.g. 'external_id', 'onesignal_id')
      * @param string $aliasId The value of the alias
+     *
      * @return mixed
      * @throws InvalidArgumentException
      */
     public function viewUserIdentity(string $aliasLabel, string $aliasId): mixed
     {
+        // Validations
         $this->checkEmptyValidation($aliasLabel, 'alias_label');
         $this->checkEmptyValidation($aliasId, 'alias_id');
 
+        // Prepare URL
         $basicUrl = APPS . '/' . $this->getAppId() . '/' . USERS_BY . '/' . $aliasLabel . '/' . $aliasId . '/identity';
         $url = $this->getUrl($basicUrl);
+
+        // Execute API
         return $this->get($url);
     }
 
@@ -522,17 +533,20 @@ class OneSignalManager extends OneSignalClient
      * Retrieve all aliases associated with a user using a known subscription ID.
      *
      * @param string $subscriptionId The unique identifier that represents a subscription in our system.
+     *
      * @return mixed
      * @throws InvalidArgumentException
      */
     public function viewUserIdentityBySubscription(string $subscriptionId): mixed
     {
-        if (empty($subscriptionId)) {
-            throw new InvalidArgumentException('subscription id is required.');
-        }
+        // Validations
+        $this->checkEmptyValidation($subscriptionId, 'subscriptionId');
 
+        // Prepare URL
         $basicUrl = APPS . '/' . $this->getAppId() . '/' . SUBSCRIPTIONS . '/' . $subscriptionId . '/user/identity';
         $url = $this->getUrl($basicUrl);
+
+        // Execute API
         return $this->get($url);
     }
 
@@ -548,15 +562,20 @@ class OneSignalManager extends OneSignalClient
      */
     public function createAlias(string $aliasLabel, string $aliasId, array $fields): mixed
     {
+        // Validations
         $this->checkEmptyValidation($aliasLabel, 'alias_label');
         $this->checkEmptyValidation($aliasId, 'alias_id');
 
-        $basicUrl = APPS . '/' . $this->getAppId() . '/' . USERS_BY . '/' . $aliasLabel . '/' . $aliasId. '/identity';
+        // Prepare URL
+        $basicUrl = APPS . '/' . $this->getAppId() . '/' . USERS_BY . '/' . $aliasLabel . '/' . $aliasId . '/identity';
         $url = $this->getUrl($basicUrl);
+
+        // Execute API
         return $this->patch($url, json_encode($fields));
     }
 
     /** Create or update an alias for a user using a known subscription ID.
+     *
      * @param string $subscriptionId
      * @param array $fields
      *
@@ -564,10 +583,14 @@ class OneSignalManager extends OneSignalClient
      */
     public function createAliasBySubscription(string $subscriptionId, array $fields): mixed
     {
+        // Validations
         $this->checkEmptyValidation($subscriptionId, 'subscriptionId');
 
-        $basicUrl = APPS . '/' . $this->getAppId() . '/' . SUBSCRIPTIONS . '/' . $subscriptionId. '/user/identity';
+        // Prepare URL
+        $basicUrl = APPS . '/' . $this->getAppId() . '/' . SUBSCRIPTIONS . '/' . $subscriptionId . '/user/identity';
         $url = $this->getUrl($basicUrl);
+
+        // Execute API
         return $this->patch($url, json_encode($fields));
     }
 
@@ -580,23 +603,57 @@ class OneSignalManager extends OneSignalClient
      */
     public function deleteAlias(string $aliasLabel, string $aliasId, string $aliasLabelToDelete): mixed
     {
+        // Validations
         $this->checkEmptyValidation($aliasLabel, 'alias_label');
         $this->checkEmptyValidation($aliasId, 'alias_id');
         $this->checkEmptyValidation($aliasLabelToDelete, 'alias_label_to_delete');
 
+        // Prepare URL
         $basicUrl = APPS . '/' . $this->getAppId() . '/' . USERS_BY . '/' . $aliasLabel . '/' . $aliasId . '/identity/' . $aliasLabelToDelete;
         $url = $this->getUrl($basicUrl);
+
+        // Execute API
         return $this->delete($url);
     }
 
     /**
+     * Add a new subscription to your user.
+     *
+     * @param string $aliasLabel The type of alias (e.g. 'external_id', 'onesignal_id')
+     * @param string $aliasId The value of the alias
+     * @param array $fields The fields to update
+     *
+     * @return mixed
+     * @throws InvalidArgumentException
+     */
+    public function createSubscription(string $aliasLabel, string $aliasId, array $fields): mixed
+    {
+        // validations
+        $this->checkEmptyValidation($aliasLabel, 'alias_label');
+        $this->checkEmptyValidation($aliasId, 'alias_id');
+        $this->checkEmptyValidation($fields, 'subscription');
+
+        // prepare URL
+        $basicUrl = APPS . '/' . $this->getAppId();
+        $partURL = '/' . USERS_BY . '/' . $aliasLabel . '/' . $aliasId . '/' . SUBSCRIPTIONS;
+        $url = $this->getUrl($basicUrl . $partURL);
+
+        // Execute API
+        return $this->post($url, json_encode($fields));
+    }
+
+    /**
      * @param $value
-     * @param $field
+     * @param string $field
      *
      * @return void
      */
-    private function checkEmptyValidation($value, $field): void
+    private function checkEmptyValidation($value, string $field): void
     {
+        if (is_array($value) && empty($value[$field])) {
+            throw new InvalidArgumentException($field . ' is required');
+        }
+
         if (empty($value)) {
             throw new InvalidArgumentException($field . ' is required');
         }
