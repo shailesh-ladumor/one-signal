@@ -455,14 +455,8 @@ class OneSignalManager extends OneSignalClient
      */
     public function viewUser(string $aliasLabel, string $aliasId): mixed
     {
-        if (empty($aliasLabel)) {
-            throw new InvalidArgumentException('alias_label is required');
-        }
-
-        if (empty($aliasId)) {
-            throw new InvalidArgumentException('alias_id is required');
-        }
-
+        $this->checkEmptyValidation($aliasLabel, 'alias_label');
+        $this->checkEmptyValidation($aliasId, 'alias_id');
 
         $url = $this->getUrl(APPS . '/' . $this->getAppId() . '/' . USERS_BY . '/' . $aliasLabel . '/' . $aliasId);
         return $this->get($url);
@@ -480,18 +474,12 @@ class OneSignalManager extends OneSignalClient
      */
     public function updateUser(string $aliasLabel, string $aliasId, array $fields): mixed
     {
-        if (empty($aliasLabel)) {
-            throw new InvalidArgumentException('alias_label is required');
-        }
-
-        if (empty($aliasId)) {
-            throw new InvalidArgumentException('alias_id is required');
-        }
+        $this->checkEmptyValidation($aliasLabel, 'alias_label');
+        $this->checkEmptyValidation($aliasId, 'alias_id');
 
         $url = $this->getUrl(APPS . '/' . $this->getAppId() . '/' . USERS_BY . '/' . $aliasLabel . '/' . $aliasId);
         return $this->patch($url, json_encode($fields));
     }
-
 
     /**
      * Delete a user including all associated properties, subscriptions, and identity.
@@ -504,13 +492,8 @@ class OneSignalManager extends OneSignalClient
      */
     public function deleteUser(string $aliasLabel, string $aliasId): mixed
     {
-        if (empty($aliasLabel)) {
-            throw new InvalidArgumentException('alias_label is required');
-        }
-
-        if (empty($aliasId)) {
-            throw new InvalidArgumentException('alias_id is required');
-        }
+        $this->checkEmptyValidation($aliasLabel, 'alias_label');
+        $this->checkEmptyValidation($aliasId, 'alias_id');
 
         $url = $this->getUrl(APPS . '/' . $this->getAppId() . '/' . USERS_BY . '/' . $aliasLabel . '/' . $aliasId);
 
@@ -527,13 +510,8 @@ class OneSignalManager extends OneSignalClient
      */
     public function viewUserIdentity(string $aliasLabel, string $aliasId): mixed
     {
-        if (empty($aliasLabel)) {
-            throw new InvalidArgumentException('alias_label is required');
-        }
-
-        if (empty($aliasId)) {
-            throw new InvalidArgumentException('alias_id is required');
-        }
+        $this->checkEmptyValidation($aliasLabel, 'alias_label');
+        $this->checkEmptyValidation($aliasId, 'alias_id');
 
         $basicUrl = APPS . '/' . $this->getAppId() . '/' . USERS_BY . '/' . $aliasLabel . '/' . $aliasId . '/identity';
         $url = $this->getUrl($basicUrl);
@@ -570,13 +548,8 @@ class OneSignalManager extends OneSignalClient
      */
     public function createAlias(string $aliasLabel, string $aliasId, array $fields): mixed
     {
-        if (empty($aliasLabel)) {
-            throw new InvalidArgumentException('alias_label is required');
-        }
-
-        if (empty($aliasId)) {
-            throw new InvalidArgumentException('alias_id is required');
-        }
+        $this->checkEmptyValidation($aliasLabel, 'alias_label');
+        $this->checkEmptyValidation($aliasId, 'alias_id');
 
         $basicUrl = APPS . '/' . $this->getAppId() . '/' . USERS_BY . '/' . $aliasLabel . '/' . $aliasId. '/identity';
         $url = $this->getUrl($basicUrl);
@@ -591,9 +564,7 @@ class OneSignalManager extends OneSignalClient
      */
     public function createAliasBySubscription(string $subscriptionId, array $fields): mixed
     {
-        if (empty($subscriptionId)) {
-            throw new InvalidArgumentException('subscription id is required');
-        }
+        $this->checkEmptyValidation($subscriptionId, 'subscriptionId');
 
         $basicUrl = APPS . '/' . $this->getAppId() . '/' . SUBSCRIPTIONS . '/' . $subscriptionId. '/user/identity';
         $url = $this->getUrl($basicUrl);
@@ -609,20 +580,25 @@ class OneSignalManager extends OneSignalClient
      */
     public function deleteAlias(string $aliasLabel, string $aliasId, string $aliasLabelToDelete): mixed
     {
-        if (empty($aliasLabel)) {
-            throw new InvalidArgumentException('alias_label is required');
-        }
-
-        if (empty($aliasId)) {
-            throw new InvalidArgumentException('alias_id is required');
-        }
-
-        if (empty($aliasLabelToDelete)) {
-            throw new InvalidArgumentException('alias_label_to_delete is required');
-        }
+        $this->checkEmptyValidation($aliasLabel, 'alias_label');
+        $this->checkEmptyValidation($aliasId, 'alias_id');
+        $this->checkEmptyValidation($aliasLabelToDelete, 'alias_label_to_delete');
 
         $basicUrl = APPS . '/' . $this->getAppId() . '/' . USERS_BY . '/' . $aliasLabel . '/' . $aliasId . '/identity/' . $aliasLabelToDelete;
         $url = $this->getUrl($basicUrl);
         return $this->delete($url);
+    }
+
+    /**
+     * @param $value
+     * @param $field
+     *
+     * @return void
+     */
+    private function checkEmptyValidation($value, $field): void
+    {
+        if (empty($value)) {
+            throw new InvalidArgumentException($field . ' is required');
+        }
     }
 }
