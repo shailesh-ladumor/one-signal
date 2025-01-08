@@ -643,6 +643,86 @@ class OneSignalManager extends OneSignalClient
     }
 
     /**
+     * Update a subscription's properties.
+     * @param string $subscriptionId
+     * @param array $fields
+     *
+     * @return mixed
+     */
+    public function updateSubscription(string $subscriptionId, array $fields): mixed
+    {
+        // validations
+        $this->checkEmptyValidation($subscriptionId, 'subscriptionId');
+        $this->checkEmptyValidation($fields, 'subscription');
+
+        // prepare URL
+        $basicUrl = APPS . '/' . $this->getAppId() . '/' . SUBSCRIPTIONS . '/' . $subscriptionId;
+        $url = $this->getUrl($basicUrl);
+
+        // Execute API
+        return $this->patch($url, json_encode($fields));
+    }
+
+    /**
+     * Delete an existing subscription.
+     *
+     * @param string $subscriptionId
+     *
+     * @return mixed
+     */
+    public function deleteSubscription(string $subscriptionId): mixed
+    {
+        // validations
+        $this->checkEmptyValidation($subscriptionId, 'subscriptionId');
+
+        // prepare URL
+        $basicUrl = APPS . '/' . $this->getAppId() . '/' . SUBSCRIPTIONS . '/' . $subscriptionId;
+        $url = $this->getUrl($basicUrl);
+
+        // Execute API
+        return $this->delete($url);
+    }
+
+    /**
+     * Transfer a subscription to a different user.
+     * @param string $subscriptionId
+     * @param array $fields
+     *
+     * @return mixed
+     */
+    public function transferSubscription(string $subscriptionId, array $fields): mixed
+    {
+        // validations
+        $this->checkEmptyValidation($subscriptionId, 'subscriptionId');
+        $this->checkEmptyValidation($fields, 'identity');
+
+        // prepare URL
+        $basicUrl = APPS . '/' . $this->getAppId() . '/' . SUBSCRIPTIONS . '/' . $subscriptionId. '/owner';
+        $url = $this->getUrl($basicUrl);
+
+        // Execute API
+        return $this->patch($url, json_encode($fields));
+    }
+
+    /**
+     * @param string $notificationId
+     * @param string $token
+     *
+     * @return array|mixed
+     */
+    public function unsubscribeNotification(string $notificationId, string $token)
+    {
+        // validations
+        $this->checkEmptyValidation($notificationId, 'notificationId');
+        $this->checkEmptyValidation($token, 'token');
+
+        $basicUrl = APPS . '/' . $this->getAppId() . '/' . NOTIFICATIONS . '/' . $notificationId . '/unsubscribe';
+        $url = $this->getUrl($basicUrl, ['token' => $token]);
+        return $this->post($url, '');
+    }
+
+    /** This method check empty validation and throw exception if empty.
+     *
      * @param $value
      * @param string $field
      *
