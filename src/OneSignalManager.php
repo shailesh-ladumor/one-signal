@@ -12,6 +12,7 @@ define("SEGMENTS", "segments");
 define("USERS", "users");
 define("USERS_BY", "users/by");
 define("SUBSCRIPTIONS", "subscriptions");
+define("TEMPLATES", "templates");
 
 /**
  * Class OneSignalManager
@@ -576,7 +577,6 @@ class OneSignalManager extends OneSignalClient
 
     /** Create or update an alias for a user using a known subscription ID.
      *
-     * @param string $subscriptionId
      * @param array $fields
      *
      * @return mixed
@@ -644,6 +644,7 @@ class OneSignalManager extends OneSignalClient
 
     /**
      * Update a subscription's properties.
+     *
      * @param string $subscriptionId
      * @param array $fields
      *
@@ -685,6 +686,7 @@ class OneSignalManager extends OneSignalClient
 
     /**
      * Transfer a subscription to a different user.
+     *
      * @param string $subscriptionId
      * @param array $fields
      *
@@ -697,7 +699,7 @@ class OneSignalManager extends OneSignalClient
         $this->checkEmptyValidation($fields, 'identity');
 
         // prepare URL
-        $basicUrl = APPS . '/' . $this->getAppId() . '/' . SUBSCRIPTIONS . '/' . $subscriptionId. '/owner';
+        $basicUrl = APPS . '/' . $this->getAppId() . '/' . SUBSCRIPTIONS . '/' . $subscriptionId . '/owner';
         $url = $this->getUrl($basicUrl);
 
         // Execute API
@@ -719,6 +721,119 @@ class OneSignalManager extends OneSignalClient
         $basicUrl = APPS . '/' . $this->getAppId() . '/' . NOTIFICATIONS . '/' . $notificationId . '/unsubscribe';
         $url = $this->getUrl($basicUrl, ['token' => $token]);
         return $this->post($url, '');
+    }
+
+    /**
+     * Create templates for push, email and sms visible and usable in the dashboard and API.
+     *
+     * @param array $fields
+     *
+     * @return mixed
+     */
+    public function createTemplate(array $fields): mixed
+    {
+        // validations
+        $this->checkEmptyValidation($fields, 'name');
+
+        // set app id if not set in payload
+        if (empty($fields['app_id'])) {
+            $fields['app_id'] = $this->getAppId();
+        }
+
+        // prepare URL
+        $url = $this->getUrl(TEMPLATES);
+
+        // Execute API
+        return $this->post($url, json_encode($fields));
+    }
+
+    /**
+     * Update previously created templates for push, email and sms visible and usable in the dashboard and API.
+     *
+     * @param string $templateId
+     * @param array $fields
+     *
+     * @return mixed
+     */
+    public function updateTemplate(string $templateId, array $fields): mixed
+    {
+        // validations
+        $this->checkEmptyValidation($fields, 'name');
+
+        // prepare URL
+        $url = $this->getUrl(TEMPLATES . '/' . $templateId, ['app_id' => $this->getAppId()]);
+
+        // Execute API
+        return $this->patch($url, json_encode($fields));
+    }
+
+    /**
+     * Returns an array of templates from an app.
+     *
+     * @param array $params
+     *
+     * @return mixed
+     */
+    public function viewTemplates(array $params): mixed
+    {
+        if (empty($fields['app_id'])) {
+            $params['app_id'] = $this->getAppId();
+        }
+        if (empty($fields['limit'])) {
+            $params['limit'] = 50;
+        }
+        if (empty($fields['offset'])) {
+            $params['offset'] = 0;
+        }
+
+        // prepare URL
+        $url = $this->getUrl(TEMPLATES, $params);
+
+        // Execute API
+        return $this->get($url);
+    }
+
+    /**
+     * Delete templates from OneSignal.
+     *
+     * @param string $templateId
+     * @param array $params
+     *
+     * @return mixed
+     */
+    public function deleteTemplate(string $templateId, array $params): mixed
+    {
+        if (empty($fields['app_id'])) {
+            $params['app_id'] = $this->getAppId();
+        }
+
+        // prepare URL
+        $url = $this->getUrl(TEMPLATES . '/' . $templateId, $params);
+
+        // Execute API
+        return $this->delete($url);
+    }
+
+    /**
+     * Create a duplicate of a template in another app
+     *
+     * @param string $templateId
+     * @param array $fields
+     *
+     * @return mixed
+     */
+    public function copyTemplate(string $templateId, array $fields): mixed
+    {
+        // validations
+        $this->checkEmptyValidation($fields, 'target_app_id');
+
+        // prepare URL
+        $params['app_id'] = empty($fields['app_id']) ? $this->getAppId() : $fields['app_id'];
+
+        $url = $this->getUrl(TEMPLATES . '/' . $templateId, $params);
+
+        // Execute API
+        return $this->post($url, json_encode(['target_app_id' => $fields['target_app_id']]));
     }
 
     /** This method check empty validation and throw exception if empty.
