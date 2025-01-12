@@ -15,9 +15,9 @@ class UserDeviceRepository
     /**
      * @param $input
      *
-     * @return UserDevice
+     * @return UserDevice | null
      */
-    public function updateOrCreate($input)
+    public function updateOrCreate($input): UserDevice | null
     {
         try {
             return UserDevice::updateOrCreate([

@@ -21,7 +21,7 @@ class PublishUserDevice extends Command
      */
     protected $description = 'Publish Migration|Controller|Service of User Device APIs';
 
-    public $composer;
+    public mixed $composer;
     /**
      * Create a new command instance.
      */
@@ -31,7 +31,8 @@ class PublishUserDevice extends Command
 
         $this->composer = app()['composer'];
     }
-    public function handle()
+
+    public function handle(): void
     {
         $controllerDir = app_path('Http/Controllers/API');
         if (!File::isDirectory($controllerDir)) {
@@ -78,8 +79,16 @@ class PublishUserDevice extends Command
         $this->info('Greeting From Shailesh Ladumor!');
     }
 
-    public static function createFile($path, $fileName, $contents)
+    /**
+     * @param string $path
+     * @param string $fileName
+     * @param mixed $contents
+     *
+     * @return void
+     */
+    public static function createFile(string $path,string $fileName, mixed $contents): void
     {
+        // create the directory if it does not exist with permission
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }

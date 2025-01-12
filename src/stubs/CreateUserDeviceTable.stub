@@ -17,7 +17,9 @@ class CreateUserDevicesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('device_type');
-            $table->string('os_player_id')->unique();
+            $table->string('onesignal_id')->unique();
+            $table->string('external_id');
+            $table->string('aliases');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
 
