@@ -71,17 +71,12 @@ class OneSignalManager extends OneSignalClient
      *
      * @return array|mixed
      */
-    public function sendEmail(array $fields)
+    public function sendEmail(array $fields): mixed
     {
         $fields['app_id'] = $this->getAppId();
 
-        if (empty($fields['email_subject'])) {
-            throw new InvalidArgumentException('email_subject is required');
-        }
-
-        if (empty($fields['email_body'])) {
-            throw new InvalidArgumentException('email_body is required');
-        }
+        $this->checkEmptyValidation($fields, 'email_subject');
+        $this->checkEmptyValidation($fields, 'email_body');
 
         return $this->post($this->getUrl(NOTIFICATIONS, ['c' => 'email']), json_encode($fields));
     }
@@ -170,237 +165,15 @@ class OneSignalManager extends OneSignalClient
             throw new InvalidArgumentException('Notification id is required');
         }
 
-        if (empty($fields['events'])) {
+        if (empty($params['events'])) {
             throw new InvalidArgumentException('events is required. Ex. "sent", "clicked"');
         }
 
-        $partUrl = DIRECTORY_SEPARATOR . $notificationId . "/history?app_id=" . $this->getAppId();
+        $partUrl = DIRECTORY_SEPARATOR . $notificationId . "/history";
+
+        $params['app_id'] = $this->getAppId();
+
         $url = $this->getUrl(NOTIFICATIONS . $partUrl, $params);
-
-        return $this->get($url);
-    }
-
-    /**
-     * Create Segment
-     *
-     * @param $fields
-     * @param null $appId
-     *
-     * @return array|mixed
-     */
-    public function createSegment($fields, $appId = null): mixed
-    {
-        if (empty($appId)) { // take a default if does not specified
-            $appId = $this->getAppId();
-        }
-
-        return $this->post($this->getUrl(APPS . '/' . $appId . '/' . SEGMENTS), json_encode($fields));
-    }
-
-    /**
-     * @param string $segmentId
-     * @param null $appId
-     *
-     * @return array|mixed
-     */
-    public function deleteSegment(string $segmentId, $appId = null): mixed
-    {
-        if (empty($appId)) { // take a default if does not specified
-            $appId = $this->getAppId();
-        }
-
-        return $this->delete($this->getUrl(APPS . '/' . $appId . '/' . SEGMENTS . '/' . $segmentId));
-    }
-
-    /**
-     * View segments for an app
-     *
-     * @param string|null $appId
-     *
-     * @return array|mixed
-     */
-    public function viewSegments(int $limit = 0, $offset = 0, string $appId = null): mixed
-    {
-        if (empty($appId)) {
-            $appId = $this->getAppId();
-        }
-
-        $url = $this->getUrl(APPS . '/' . $appId . '/' . SEGMENTS);
-
-        // Set query params here
-        if ($limit > 0) {
-            $url .= '?limit=' . $limit;
-            if ($offset > 0) {
-                $url .= '&offset=' . $offset;
-            }
-        }
-
-        return $this->get($url);
-    }
-
-    /**
-     * GET all apps of your one signal.
-     *
-     * @return array|mixed
-     */
-    public function getApps(): mixed
-    {
-        $this->setAuthorization($this->getAuthKey());
-
-        $url = $this->getUrl(APPS);
-
-        return $this->get($url);
-    }
-
-    /**
-     * GET single app of your one signal.
-     *
-     * @param string|null $appId
-     *
-     * @return array|mixed
-     */
-    public function getApp(string $appId = null): mixed
-    {
-        $this->setAuthorization($this->getAuthKey());
-
-        $url = $this->getUrl(APPS . '/' . $appId);
-
-        return $this->get($url);
-    }
-
-    /**
-     * Add new application on your one signal.
-     *
-     * @param array $fields
-     *
-     * @return array|mixed
-     */
-    public function createApp(array $fields): mixed
-    {
-        $this->setAuthorization($this->getAuthKey());
-
-        return $this->post($this->getUrl(APPS), json_encode($fields));
-    }
-
-    /**
-     * Update existing application on your one signal.
-     *
-     * @param array $fields
-     * @param string|null $appId
-     *
-     * @return array|mixed
-     */
-    public function updateApp(array $fields, string $appId = null): mixed
-    {
-        $this->setAuthorization($this->getAuthKey());
-
-        if (empty($appId)) { // take a default if does not specified
-            $appId = $this->getAppId();
-        }
-
-        return $this->put($this->getUrl(APPS . '/' . $appId), json_encode($fields));
-    }
-
-    /**
-     * @param int $limit
-     * @param int $offset
-     *
-     * @return array|mixed
-     * @deprecated
-     * GET all devices of any applications.
-     *
-     */
-    public function getDevices(int $limit = 50, int $offset = 0): mixed
-    {
-        $url = $this->getUrl(DEVICES) . '?app_id=' . $this->getAppId() . '&limit=' . $limit . '&offset=' . $offset;
-
-        return $this->get($url);
-    }
-
-    /**
-     * @param string $playerId
-     *
-     * @return object
-     * @deprecated
-     * Get Single Device information
-     *
-     */
-    public function getDevice(string $playerId): object
-    {
-        $url = $this->getUrl(DEVICES) . '/' . $playerId . "?app_id=" . $this->getAppId();
-
-        return $this->get($url);
-    }
-
-    /**
-     * @param array $fields
-     *
-     * @return array|mixed
-     * @deprecated
-     * Add new device on your application
-     *
-     */
-    public function addDevice(array $fields): mixed
-    {
-        if (empty($fields['app_id'])) {
-            $fields['app_id'] = $this->getAppId();
-        }
-
-        if (empty($fields['language'])) {
-            $fields['language'] = "en";
-        }
-
-        return $this->post($this->getUrl(DEVICES), json_encode($fields));
-    }
-
-    /**
-     * @param array $fields
-     * @param string $playerId
-     *
-     * @return array|mixed
-     * @deprecated
-     * update existing device on your application
-     *
-     */
-    public function updateDevice(array $fields, string $playerId): mixed
-    {
-        if (empty($fields['app_id'])) {
-            $fields['app_id'] = $this->getAppId();
-        }
-
-        if (empty($fields['language'])) {
-            $fields['language'] = "en";
-        }
-
-        return $this->put($this->getUrl(DEVICES) . '/' . $playerId, json_encode($fields));
-    }
-
-    /**
-     * @param string $playerId
-     *
-     * @return array|mixed
-     * @deprecated
-     * delete existing device on your application
-     *
-     */
-    public function deleteDevice(string $playerId): mixed
-    {
-        $url = $this->getUrl(DEVICES) . '/' . $playerId . '?app_id=' . $this->getAppId();
-
-        return $this->delete($url);
-    }
-
-    /**
-     * GET all outcomes of any applications.
-     * Outcomes are only accessible for around 30 days
-     *
-     * @param array $params
-     *
-     * @return array|mixed
-     */
-    public function getOutcomes(array $params = []): mixed
-    {
-        $url = $this->getUrl(APPS . '/outcomes' . $this->getAppId(), $params);
 
         return $this->get($url);
     }
@@ -414,6 +187,13 @@ class OneSignalManager extends OneSignalClient
      */
     public function startLiveActivity(string $activityType, array $fields): mixed
     {
+        $this->checkEmptyValidation($fields, 'activity_id');
+        $this->checkEmptyValidation($fields, 'name');
+        $this->checkEmptyValidation($fields, 'event_attributes');
+        $this->checkEmptyValidation($fields, 'event_updates');
+        $this->checkEmptyValidation($fields, 'contents');
+        $this->checkEmptyValidation($fields, 'headings');
+
         $url = $this->getUrl(APPS . '/' . $this->getAppId() . '/activities/activity/' . $activityType);
         return $this->post($url, json_encode($fields));
     }
@@ -712,7 +492,7 @@ class OneSignalManager extends OneSignalClient
      *
      * @return array|mixed
      */
-    public function unsubscribeNotification(string $notificationId, string $token)
+    public function unsubscribeNotification(string $notificationId, string $token): mixed
     {
         // validations
         $this->checkEmptyValidation($notificationId, 'notificationId');
@@ -794,6 +574,21 @@ class OneSignalManager extends OneSignalClient
     }
 
     /**
+     * @param string $templateId
+     *
+     * @return mixed
+     */
+    public function viewTemplate(string $templateId): mixed
+    {
+        $params['app_id'] = $this->getAppId();
+        // prepare URL
+        $url = $this->getUrl(TEMPLATES . '/' . $templateId, $params);
+
+        // Execute API
+        return $this->get($url);
+    }
+
+    /**
      * Delete templates from OneSignal.
      *
      * @param string $templateId
@@ -834,6 +629,142 @@ class OneSignalManager extends OneSignalClient
 
         // Execute API
         return $this->post($url, json_encode(['target_app_id' => $fields['target_app_id']]));
+    }
+
+    /**
+     * Create Segment
+     *
+     * @param $fields
+     * @param null $appId
+     *
+     * @return array|mixed
+     */
+    public function createSegment($fields, $appId = null): mixed
+    {
+        if (empty($appId)) { // take a default if does not specified
+            $appId = $this->getAppId();
+        }
+
+        return $this->post($this->getUrl(APPS . '/' . $appId . '/' . SEGMENTS), json_encode($fields));
+    }
+
+    /**
+     * @param string $segmentId
+     * @param null $appId
+     *
+     * @return array|mixed
+     */
+    public function deleteSegment(string $segmentId, $appId = null): mixed
+    {
+        if (empty($appId)) { // take a default if does not specified
+            $appId = $this->getAppId();
+        }
+
+        return $this->delete($this->getUrl(APPS . '/' . $appId . '/' . SEGMENTS . '/' . $segmentId));
+    }
+
+    /**
+     * View segments for an app
+     *
+     * @param string|null $appId
+     *
+     * @return array|mixed
+     */
+    public function viewSegments(int $limit = 0, $offset = 0, string $appId = null): mixed
+    {
+        if (empty($appId)) {
+            $appId = $this->getAppId();
+        }
+
+        $url = $this->getUrl(APPS . '/' . $appId . '/' . SEGMENTS);
+
+        // Set query params here
+        if ($limit > 0) {
+            $url .= '?limit=' . $limit;
+            if ($offset > 0) {
+                $url .= '&offset=' . $offset;
+            }
+        }
+
+        return $this->get($url);
+    }
+
+    /**
+     * GET all apps of your one signal.
+     *
+     * @return array|mixed
+     */
+    public function getApps(): mixed
+    {
+        $this->setAuthorization($this->getAuthKey());
+
+        $url = $this->getUrl(APPS);
+
+        return $this->get($url);
+    }
+
+    /**
+     * GET single app of your one signal.
+     *
+     * @param string|null $appId
+     *
+     * @return array|mixed
+     */
+    public function getApp(string $appId = null): mixed
+    {
+        $this->setAuthorization($this->getAuthKey());
+
+        $url = $this->getUrl(APPS . '/' . $appId);
+
+        return $this->get($url);
+    }
+
+    /**
+     * Add new application on your one signal.
+     *
+     * @param array $fields
+     *
+     * @return array|mixed
+     */
+    public function createApp(array $fields): mixed
+    {
+        $this->setAuthorization($this->getAuthKey());
+
+        return $this->post($this->getUrl(APPS), json_encode($fields));
+    }
+
+    /**
+     * Update existing application on your one signal.
+     *
+     * @param array $fields
+     * @param string|null $appId
+     *
+     * @return array|mixed
+     */
+    public function updateApp(array $fields, string $appId = null): mixed
+    {
+        $this->setAuthorization($this->getAuthKey());
+
+        if (empty($appId)) { // take a default if does not specified
+            $appId = $this->getAppId();
+        }
+
+        return $this->put($this->getUrl(APPS . '/' . $appId), json_encode($fields));
+    }
+
+    /**
+     * GET all outcomes of any applications.
+     * Outcomes are only accessible for around 30 days
+     *
+     * @param array $params
+     *
+     * @return array|mixed
+     */
+    public function getOutcomes(array $params = []): mixed
+    {
+        $url = $this->getUrl(APPS . '/outcomes' . $this->getAppId(), $params);
+
+        return $this->get($url);
     }
 
     /** This method check empty validation and throw exception if empty.

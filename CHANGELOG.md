@@ -1,10 +1,16 @@
-### [v2.0.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v2.0.0) (Jan 11, 2025)
+### [v2.0.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v2.0.0) (Jan 12, 2025)
 #### Added
 * One Signal API Latest version support add
 * New APIs Support added
+  * Live Activities
+  * User
+  * Subscriptions
+  * Templates
 * Laravel 11 support add 
 * User devices new fields added as per user modal
 * Laravel 7 and below support removed (use version 1.0.0 this versions)
+* Deperecated api support removed 
+  * Devices
 
 ### [v1.0.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v1.0.0) (Jun 22, 2023)
 #### Added
