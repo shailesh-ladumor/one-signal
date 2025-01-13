@@ -215,9 +215,6 @@ To cancel a notification, use the cancelNotification method by calling,
     
     OneSignal::cancelNotification($notificationID);
 
-You can check [here](https://documentation.onesignal.com/reference#section-result-format-view-notifications) return
-response format.
-
 ### Notification History
 
 For retrieve notification History, use the `getMessageHistory` method by calling,
@@ -256,7 +253,7 @@ See for more params [here](https://documentation.onesignal.com/reference/update-
 
 ### Create User
 
-for Register a new user in OneSignal’s system, use the `createUser` method by calling,
+For register a new user in OneSignal’s system, use the `createUser` method by calling,
 
 ```injectablephp
 
@@ -317,7 +314,7 @@ $params = [
 
 ### View User
 
-for Retrieve a user including aliases, properties, and subscriptions, use the `viewUser` method by calling,
+For retrieve a user including aliases, properties, and subscriptions, use the `viewUser` method by calling,
 
 ```injectablephp
     OneSignal::viewUser($onesignalId, $aliasId);
@@ -325,8 +322,8 @@ for Retrieve a user including aliases, properties, and subscriptions, use the `v
 
 ### Update User
 
-for Update a user’s properties, tags, and subscriptions, use the `updateUser` method by calling,
-for $params you can refer [here](https://documentation.onesignal.com/reference/update-user#body-parameters)
+For update a user’s properties, tags, and subscriptions, use the `updateUser` method by calling,
+You can refer [here](https://documentation.onesignal.com/reference/update-user#body-parameters) for more detail about $params
 
 ```injectablephp
     OneSignal::updateUser($onesignalId, $aliasId, $params);
@@ -532,8 +529,6 @@ For transfer a template, use the `copyTemplate` method by calling,
 
 ### Create Segment
 
-#### NOTE: REQUIRED ONE-SIGNAL [PAID PLAN](https://documentation.onesignal.com/docs/paid-plan-benefits)
-
 For add a new segment in your application, use the `createSegment` method by calling,
 
      $fields = [
@@ -543,20 +538,18 @@ For add a new segment in your application, use the `createSegment` method by cal
     
     return OneSignal::createSegment($fields); 
 
-You can check [here](https://documentation.onesignal.com/reference#create-segments) supported parameters and guide.
+You can check [here](https://documentation.onesignal.com/reference/create-segments#body-parameters) supported parameters and guide.
 
     OneSignal::deleteSegment('YOUR_SEGMENT_ID')
 
 ### Delete Segment
 
-#### NOTE: REQUIRED ONE-SIGNAL [PAID PLAN](https://documentation.onesignal.com/docs/paid-plan-benefits)
-
-You can check [here](https://documentation.onesignal.com/reference#delete-segments) for more guide.
+You can check [here](https://documentation.onesignal.com/reference/delete-segments#how-to-use-this-api) for more guide.
 
 ## Apps
 
 Note*: `Auth key must be set in one-signal.php` how to
-get [auth_key](https://documentation.onesignal.com/docs/accounts-and-keys#section-user-auth-key)?
+get [auth_key](https://documentation.onesignal.com/docs/keys-and-ids#organization-api-key)?
 
 ### View Apps
 
@@ -564,7 +557,7 @@ View the details of all of your current OneSignal apps
 
      $apps = OneSignal::getApps();
 
-You can check [here](https://documentation.onesignal.com/reference#view-apps-apps) api response.
+You can check [here](https://documentation.onesignal.com/reference/view-apps) api response.
 
 ### View App
 
@@ -576,7 +569,7 @@ View the details of single of your current OneSignal app or other app by passing
      // you can specify app id as wel but it's optional
      $app = OneSignal::getApp('YOUR_APP_ID');
 
-You can check [here](https://documentation.onesignal.com/reference#view-an-app) api response.
+You can check [here](https://documentation.onesignal.com/reference/view-an-app) api response.
 
 ### Create App
 
@@ -588,7 +581,7 @@ Creates a new OneSignal app.
     
      OneSignal::createApp($fields);
 
-You can check [here](https://documentation.onesignal.com/reference#create-an-app) supported parameters and guide.
+You can check [here](https://documentation.onesignal.com/reference/create-an-app) supported parameters and guide.
 
 ### Update App
 
@@ -601,11 +594,11 @@ Update a new OneSignal app.
      OneSignal::updateApp($fields);
      // you can pass second param as a appId if you want to update other app.. default take from config.
 
-You can check [here](https://documentation.onesignal.com/reference#update-an-app) supported parameters and guide.
+You can check [here](https://documentation.onesignal.com/reference/update-an-app) supported parameters and guide.
 
 ### View Outcomes
 
-Update a new OneSignal app.
+View the details of all the outcomes associated with your app.
 
      $fields = array(
             'outcome_names'       => "os__click.count",
@@ -619,85 +612,7 @@ Update a new OneSignal app.
      // you can pass params in this method, it's optional.
 
 You can check [here](https://documentation.onesignal.com/reference/view-outcomes) supported parameters and guide.
-
-### Get All Devices
-
-***This method @deperecated by onesingnal.***
-
-For retrieve all user devices, use the `getDevices` method by calling,
-
-    OneSignal::getDevices();
-
-You can check [here](https://documentation.onesignal.com/reference#view-devices) return response format.
-
-### Get Single Device
-
-***This method @deperecated by onesingnal.***
-
-For retrieve single Devices, use the `getDevice` method with id param by calling,
-
-    OneSignal::getDevice($deviceId);    
-
-You can check [here](https://documentation.onesignal.com/reference#view-device) return response format.
-
-### Create Device
-
-***This method @deperecated by onesingnal.***
-
-For add a device in your application, use the `addDevice` method by calling, if you want to create device in different
-application than you can specify `app_id` in `$fields` array.
-
-     $fields = [
-            'device_type'  => 0,
-            'identifier'   => '7abcd558f29d0b1f048083e2834ad8ea4b3d87d8ad9c088b33c132706ff445f0',
-            'timezone'     => '-28800',
-            'game_version' => '1.1',
-            'device_os'    => '7.0.4',
-            'test_type'    => 1,
-            'device_model' => "iPhone 8,2",
-            'tags'         => array("foo" => "bar")
-        ];
-        
-     return OneSignal::addDevice($fields);   
-
-You can check [here](https://documentation.onesignal.com/reference#section-example-code-add-a-device) supported
-parameters and guide.
-
-### Update Device
-
-***This method @deperecated by onesingnal.***
-
-For update a device in your application, use the `addDevice` method by calling, if you want to update device in
-different application than you can specify `app_id` in `$fields` array.
-
-     $fields = [
-            'device_type'  => 0,
-            'identifier'   => '7abcd558f29d0b1f048083e2834ad8ea4b3d87d8ad9c088b33c132706ff445f0',
-            'timezone'     => '-28800',
-            'game_version' => '1.1',
-            'device_os'    => '7.0.4',
-            'test_type'    => 1,
-            'device_model' => "iPhone 8,2",
-            'tags'         => array("foo" => "bar")
-        ];
-        
-     $playerId = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
-        
-     return OneSignal::updateDevice($fields, $playerId);   
-
-You can check [here](https://documentation.onesignal.com/reference#section-body-parameters) supported parameters and
-guide.
-
-### Delete Device
-
-***This method @deperecated by onesingnal.***
-
-Delete existing device on your application
-
-```injectablephp
-OneSignal::deleteDevice($deviceId);
-```
-
+ 
 ## User Device
 
 [<img src="https://img.youtube.com/vi/wOH1qsQ3SL8/0.jpg" width="250">](https://youtu.be/wOH1qsQ3SL8)
