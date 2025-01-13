@@ -18,7 +18,7 @@ class UserDeviceAPIController extends Controller
 
     /**
      * UserDeviceAPIController constructor.
-     * @param  UserDeviceRepository  $userDeviceRepo
+     * @param UserDeviceRepository $userDeviceRepo
      */
     public function __construct(UserDeviceRepository $userDeviceRepo)
     {
@@ -26,11 +26,11 @@ class UserDeviceAPIController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return JsonResponse
      */
-    public function registerDevice(Request $request)
+    public function registerDevice(Request $request): JsonResponse
     {
         $this->userDeviceRepo->updateOrCreate($request->all());
 
@@ -38,13 +38,13 @@ class UserDeviceAPIController extends Controller
     }
 
     /**
-     * @param $playerId
+     * @param string $oneSignalId
      *
      * @return JsonResponse
      */
-    public function updateNotificationStatus($playerId)
+    public function updateNotificationStatus(string $oneSignalId):JsonResponse
     {
-        $this->userDeviceRepo->updateStatus($playerId);
+        $this->userDeviceRepo->updateStatus($oneSignalId);
 
         return $this->sendSuccess('The notification status has been updated successfully.');
     }
@@ -54,7 +54,7 @@ class UserDeviceAPIController extends Controller
      *
      * @return JsonResponse
      */
-    private function sendSuccess($message)
+    private function sendSuccess($message): JsonResponse
     {
         return Response::json([
             'success' => true,

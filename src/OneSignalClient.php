@@ -8,53 +8,60 @@ namespace Ladumor\OneSignal;
 class OneSignalClient
 {
     // One Signal App Key
-    public $authorization;
+    public string $authorization;
 
     /**
      *
      * @return string $authorization
      */
-    private function getAuthorization()
+    private function getAuthorization(): string
     {
         return $this->authorization;
     }
 
     /**
-     * @param  string  $key
+     * @param string $key
      */
-    public function setAuthorization($key)
+    public function setAuthorization(string $key): void
     {
         $this->authorization = $key;
     }
 
     // One Signal EndPoint Url
-    protected $url;
+    protected string $url;
 
     /**
      * @param string $url
+     * @param array $params
      *
      * @return string $url
      */
-    public function getUrl($url)
+    public function getUrl(string $url, array $params = []): string
     {
-        return $this->url . $url;
+        $url = $this->url . $url;
+
+        if (count($params) > 0) {
+            $url = $url . '?' . http_build_query($params);
+        }
+
+        return $url;
     }
 
     /**
      * @param string $url
      */
-    public function setUrl($url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
 
     // One Signal App ID
-    protected $appId;
+    protected string $appId;
 
     /**
      * @return string $appId
      */
-    public function getAppId()
+    public function getAppId(): string
     {
         return $this->appId;
     }
@@ -62,18 +69,18 @@ class OneSignalClient
     /**
      * @param string $appId
      */
-    public function setAppId($appId)
+    public function setAppId(string $appId): void
     {
         $this->appId = $appId;
     }
 
     // Default mutable content is enabled
-    protected $mutableContent;
+    protected string $mutableContent;
 
     /**
      * @param string $mutableContent
      */
-    public function setMutableContent($mutableContent)
+    public function setMutableContent(string $mutableContent): void
     {
         $this->mutableContent = $mutableContent;
     }
@@ -81,18 +88,18 @@ class OneSignalClient
     /**
      * @return string $mutableContent
      */
-    public function getMutableContent()
+    public function getMutableContent(): string
     {
         return $this->mutableContent;
     }
 
     // One Signal Auth key
-    protected $authKey;
+    protected string $authKey;
 
     /**
-     * @param  string  $authKey
+     * @param string $authKey
      */
-    public function setAuthKey($authKey)
+    public function setAuthKey(string $authKey): void
     {
         $this->authKey = trim($authKey);
     }
@@ -100,35 +107,38 @@ class OneSignalClient
     /**
      * @return string $authKey
      */
-    public function getAuthKey()
+    public function getAuthKey(): string
     {
         return $this->authKey;
     }
 
     /**
      * return headers
+     *
      * @return array
      */
-    protected function getHeaders()
+    protected function getHeaders(): array
     {
-        return array(
+        return [
             'Content-Type: application/json; charset=utf-8',
             'X-Requested-With:XMLHttpRequest',
-            'Authorization: Basic '.$this->getAuthorization(),
-        );
+            'Authorization: Basic ' . $this->getAuthorization(),
+        ];
     }
 
     /**
      * GEt Method
+     *
      * @param string $url
+     *
      * @return array|mixed
      */
-    public function get($url)
+    public function get(string $url): mixed
     {
         try {
             $curl = curl_init();
 
-            curl_setopt_array($curl, array(
+            curl_setopt_array($curl, [
                 CURLOPT_URL            => $url,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING       => "",
@@ -137,7 +147,7 @@ class OneSignalClient
                 CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST  => "GET",
                 CURLOPT_HTTPHEADER     => $this->getHeaders(),
-            ));
+            ]);
 
             $response = curl_exec($curl);
             $err = curl_error($curl);
@@ -157,12 +167,13 @@ class OneSignalClient
 
     /**
      * Post Method
+     *
      * @param string $url
      * @param string $fields
      *
      * @return array|mixed
      */
-    public function post($url, $fields)
+    public function post(string $url, string $fields): mixed
     {
         try {
             $ch = curl_init();
@@ -192,12 +203,13 @@ class OneSignalClient
 
     /**
      * Put Method
+     *
      * @param string $url
      * @param string $fields
      *
      * @return array|mixed
      */
-    public function put($url, $fields)
+    public function put(string $url, string $fields): mixed
     {
         try {
             $ch = curl_init();
@@ -226,12 +238,49 @@ class OneSignalClient
     }
 
     /**
+     * Patch Method
+     *
+     * @param string $url
+     * @param string $fields
+     *
+     * @return array|mixed
+     */
+    public function patch(string $url, string $fields): mixed
+    {
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $this->getHeaders());
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_HEADER, false);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+            $response = curl_exec($ch);
+            curl_close($ch);
+
+            if (!empty($err)) { // return  error
+                return json_decode($err, true);
+            }
+
+            return json_decode($response, true); // return success
+        } catch (\Exception $exception) {
+            return [
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ];
+        }
+    }
+
+    /**
      * Delete Method
+     *
      * @param string $url
      *
      * @return array|mixed
      */
-    public function delete($url)
+    public function delete(string $url): mixed
     {
         try {
             $ch = curl_init();

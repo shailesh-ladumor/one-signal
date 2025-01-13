@@ -12,7 +12,9 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int $user_id
  * @property string $device_type
- * @property string $os_player_id
+ * @property string $onesignal_id
+ * @property string $external_id
+ * @property string $aliases
  * @property int $is_active
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -23,7 +25,9 @@ use Illuminate\Support\Carbon;
  * @method static Builder|UserDevice whereDeviceType($value)
  * @method static Builder|UserDevice whereId($value)
  * @method static Builder|UserDevice whereIsActive($value)
- * @method static Builder|UserDevice whereOsPlayerId($value)
+ * @method static Builder|UserDevice whereOnesignalId($value)
+ * @method static Builder|UserDevice whereExternalId($value)
+ * @method static Builder|UserDevice whereAliases($value)
  * @method static Builder|UserDevice whereUpdatedAt($value)
  * @method static Builder|UserDevice whereUserId($value)
  * @mixin \Eloquent
@@ -35,7 +39,9 @@ class UserDevice extends Model
     public $fillable = [
         'user_id',
         'device_type',
-        'os_player_id',
+        'onesignal_id',
+        'external_id',
+        'aliases',
         'is_active',
     ];
 }
