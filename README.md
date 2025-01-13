@@ -195,17 +195,17 @@ You can customise a contents and pass it in fields. message does not required wh
 
 ### Get Single Notification
 
-For retrieve single notification, use the `getNotification` method with id param by calling,
+For retrieve single notification, use the `viewMessage` method with id param by calling,
 
-    OneSignal::getNotification($notificationId);    
+    OneSignal::viewMessage($notificationId);    
 
 You can check [here](https://documentation.onesignal.com/reference/view-message#response-data) return response format.
 
 ### Get All Notifications
 
-For retrieve all notifications, use the `getNotifications` method by calling,
+For retrieve all notifications, use the `viewMessages` method by calling,
 
-    OneSignal::getNotifications();
+    OneSignal::viewMessages();
 
 ### Cancel Notification
 
