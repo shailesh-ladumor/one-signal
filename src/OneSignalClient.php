@@ -41,7 +41,7 @@ class OneSignalClient
         $url = $this->url . $url;
 
         if (count($params) > 0) {
-            $url = $url . '?' . join('&', $params);
+            $url = $url . '?' . http_build_query($params);
         }
 
         return $url;
