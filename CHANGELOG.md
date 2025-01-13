@@ -1,4 +1,4 @@
-### [v2.0.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v2.0.0) (Jan 12, 2025)
+### [v2.0.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v2.0.0) (Jan 13, 2025)
 #### Added
 * One Signal API Latest version support add
 * New APIs Support added
