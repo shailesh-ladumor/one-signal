@@ -357,6 +357,7 @@ class OneSignalManager extends OneSignalClient
 
     /** Create or update an alias for a user using a known subscription ID.
      *
+     * @param string $subscriptionId
      * @param array $fields
      *
      * @return mixed
@@ -580,9 +581,8 @@ class OneSignalManager extends OneSignalClient
      */
     public function viewTemplate(string $templateId): mixed
     {
-        $params['app_id'] = $this->getAppId();
         // prepare URL
-        $url = $this->getUrl(TEMPLATES . '/' . $templateId, $params);
+        $url = $this->getUrl(TEMPLATES . '/' . $templateId, ['app_id' => $this->getAppId()]);
 
         // Execute API
         return $this->get($url);

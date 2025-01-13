@@ -27,7 +27,8 @@ see [here](https://documentation.onesignal.com/docs/other-cms-setup)
 
 v2.0.0 is released with new features and new APIs with latest version of one signal. this version is supported in
 laravel 8 and more.
-if you want to use this package in laravel 7 or lower version than you can use v1.0.0.
+if you want to use this package in laravel 7 or lower version than you can
+use [v1.0.0](https://github.com/shailesh-ladumor/one-signal/blob/master/v1.0.0-guide.md).
 
 ## Contents
 
@@ -36,7 +37,7 @@ if you want to use this package in laravel 7 or lower version than you can use v
     - [Add Provider](#add-provider)
     - [Add Facade](#add-facade)
 - [Usage](#usage)
-    - Messages
+    - [Messages](#messages)
         - [Send Notification](#send-notification)
             - [push](#push)
             - [email](#email)
@@ -46,10 +47,10 @@ if you want to use this package in laravel 7 or lower version than you can use v
         - [Get All Notifications](#get-all-notifications)
         - [Cancel Notification](#cancel-notification)
         - [Notification History](#notification-history)
-    - Live Activities
+    - [Live Activities](#live-activities)
         - [Start Live Activity](#start-live-activity)
         - [Update Live Activity](#update-live-activity)
-    - User
+    - [User](#user)
         - [Create User](#create-user)
         - [View User](#view-user)
         - [Update User](#update-user)
@@ -59,23 +60,23 @@ if you want to use this package in laravel 7 or lower version than you can use v
         - [Create Alias](#create-alias)
         - [Create Alias by subscription](#create-alias-by-subscription)
         - [Delete Alias](#delete-alias)
-    - Subscription
+    - [Subscription](#subscription)
         - [Create Subscription](#create-subscription)
         - [Update Subscription](#update-subscription)
         - [Delete Subscription](#delete-subscription)
         - [Transfer Subscription](#transfer-subscription)
         - [Unsubscribe Notification](#unsubscribe-notification)
-    - Template
+    - [Template](#template)
         - [Create Template](#create-template)
         - [Update Template](#update-template)
         - [View Template](#view-template)
         - [View Templates](#view-templates)
         - [Delete Template](#delete-template)
         - [Copy Template](#copy-template)
-    - Segment
+    - [Segment](#segment)
         - [Create Segment (NEED PAID PLAN)](#create-segment)
         - [Delete Segment (NEED PAID PLAN)](#delete-segment)
-    - Apps
+    - [Apps](#apps)
         - [View Apps](#view-apps)
         - [View App](#view-app)
         - [Create App](#create-app)
@@ -349,10 +350,10 @@ Retrieve a user’s identity, use the `viewUserIdentity` method by calling,
 
 ### View User Identity By Sponsorship
 
-Retrieve a user’s identity by sponsorship, use the `viewUserIdentityBySponsorship` method by calling,
+Retrieve a user’s identity by subscription, use the `viewUserIdentityBySubscription` method by calling,
 
 ```injectablephp
-    OneSignal::viewUserIdentityBySponsorship($subscriptionId);
+    OneSignal::viewUserIdentityBySubscription($subscriptionId);
 ```
 
 ### Create Alias
@@ -394,6 +395,7 @@ Refer docs [here](https://documentation.onesignal.com/reference/delete-alias) fo
 ```
 
 ### Create Subscription
+
 Add a new subscription to your user. use the `createSubscription` method by calling,
 Refer docs [here](https://documentation.onesignal.com/reference/create-subscription#examples) for more body params
 
@@ -468,8 +470,10 @@ Refer docs [here](https://documentation.onesignal.com/reference/create-template)
 ```
 
 ### Update Template
+
 update a template for push, email and sms, use the `updateTemplate` method by calling,
-Refer docs [here](https://documentation.onesignal.com/reference/update-template#examples) for push, email and sms template
+Refer docs [here](https://documentation.onesignal.com/reference/update-template#examples) for push, email and sms
+template
 
 ```injectablephp
     $fields = [
@@ -485,6 +489,7 @@ Refer docs [here](https://documentation.onesignal.com/reference/update-template#
 ```
 
 ### View Template
+
 For retrieve a template, use the `viewTemplate` method by calling,
 
 ```injectablephp
@@ -492,6 +497,7 @@ For retrieve a template, use the `viewTemplate` method by calling,
 ```
 
 ### View Templates
+
 For retrieve all templates, use the `viewTemplates` method by calling,
 
 ```injectablephp
@@ -505,6 +511,7 @@ For retrieve all templates, use the `viewTemplates` method by calling,
 ```
 
 ### Delete Template
+
 For delete a template, use the `deleteTemplate` method by calling,
 
 ```injectablephp
@@ -512,7 +519,8 @@ For delete a template, use the `deleteTemplate` method by calling,
 ```
 
 ### Copy Template
-For transfer a template, use the `transferTemplate` method by calling,
+
+For transfer a template, use the `copyTemplate` method by calling,
 
 ```injectablephp
     $fields = [
