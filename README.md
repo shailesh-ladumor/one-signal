@@ -96,7 +96,7 @@ use [v1.0.0](https://github.com/shailesh-ladumor/one-signal/blob/master/v1.0.0-g
 
 Install the package by the following command
 
-    composer require ladumor/one-signal:2.0.0
+    composer require ladumor/one-signal:2.0.1
 
 ## Publish the config file
 
