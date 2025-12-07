@@ -1,3 +1,7 @@
+### [v2.0.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v2.0.1) (Dec 7, 2025)
+#### Changes
+* Laravel 12 support add
+
 ### [v2.0.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v2.0.0) (Jan 13, 2025)
 #### Added
 * One Signal API Latest version support add
