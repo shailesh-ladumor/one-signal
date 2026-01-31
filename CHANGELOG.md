@@ -1,4 +1,8 @@
-### [v2.0.0](https://github.com/shailesh-ladumor/one-signal/releases/tag/v2.0.1) (Dec 7, 2025)
+### [v2.0.2](https://github.com/shailesh-ladumor/one-signal/releases/tag/v2.0.2) (Dec 7, 2025)
+#### fix
+* fix: return value must be of type object, array returned [#38](https://github.com/shailesh-ladumor/one-signal/issues/38) Thanks @alexxkozlow
+
+### [v2.0.1](https://github.com/shailesh-ladumor/one-signal/releases/tag/v2.0.1) (Dec 7, 2025)
 #### Changes
 * Laravel 12 support add
 
