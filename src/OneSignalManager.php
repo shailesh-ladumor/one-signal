@@ -126,9 +126,9 @@ class OneSignalManager extends OneSignalClient
      *
      * @param string $notificationId
      *
-     * @return object
+     * @return mixed
      */
-    public function viewMessage(string $notificationId): object
+    public function viewMessage(string $notificationId): mixed
     {
         $url = $this->getUrl(NOTIFICATIONS) . '/' . $notificationId . "?app_id=" . $this->getAppId();
 
